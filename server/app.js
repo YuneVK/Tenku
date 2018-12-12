@@ -12,6 +12,8 @@ const path         = require('path');
 const session    = require("express-session");
 const MongoStore = require('connect-mongo')(session);
 const flash      = require("connect-flash");
+
+const cors = require('cors');
     
 
 mongoose
@@ -74,12 +76,19 @@ app.use(session({
 app.use(flash());
 require('./passport')(app);
     
+app.use(cors({
+  credentials: true,
+  origin: ['http://127.0.0.1:8080']
+}));
 
 const index = require('./routes/index');
 app.use('/', index);
 
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
-      
+
+const apiRoutes = require('./routes/api');
+app.use('/api', apiRoutes);
+
 
 module.exports = app;
