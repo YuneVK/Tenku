@@ -34,8 +34,13 @@ router.get('/culture/:name', (req, res, next) => {
       }
 
       culture.constellations.forEach((constellation, i) => {
-        constellation.points = constellation.points.map(pair => {
-          return [stars[pair[0]],stars[pair[1]]]
+        constellation.points = constellation.points.map((pair, index) => {
+          // if (index === constellation.points.length-1) {
+          //   return stars[pair[1]].coordinates
+          // } else {
+          //   return stars[pair[0]].coordinates
+          // }
+          return [stars[pair[0]].coordinates,stars[pair[1]].coordinates]
         })
         
         const {id, name, cultureName, points} = constellation;
