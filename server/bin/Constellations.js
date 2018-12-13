@@ -80,6 +80,8 @@ const Constellations = {
 
     const allStars = Constellations.findAllStars();
 
+    console.log(allStars)
+
     Constellations.addStarsData(allStars);
 
     
@@ -191,6 +193,7 @@ const Constellations = {
       }
       
       Constellations.data[id].points = pointsPairs;
+      console.log('TEST', Constellations.data[id].points)
     })
   },
 
@@ -208,9 +211,11 @@ const Constellations = {
   addStarsData: allStars => {
     console.log('AddStarsData')
     let counter = allStars.length;
+    console.log(counter)
     
 
     allStars.forEach(star => {
+      console.log(star);
       if (Constellations.stars[star]) {
         if (--counter === 0) {Constellations.setStarsData()}
       } else {

@@ -1,9 +1,24 @@
 // Copyright 2015 Olaf Frohn https://github.com/ofrohn, see LICENSE
 !(function() {
+  
+
   var Celestial = {
     version: '0.6.8',
     container: null,
-    data: []
+    data: [], 
+    setCenter: (ctr, trans) => {
+      var cx = document.querySelectorAll("centerx"), cy = document.querySelectorAll("centery"), cz = document.querySelectorAll("centerz");
+      if (!cx || !cy) return;
+      
+      if (ctr === null) ctr = [0,0,0]; 
+      if (ctr.length <= 2) ctr[2] = 0;
+      //config.center = ctr; 
+      if (trans !== "equatorial") cx.value = ctr[0].toFixed(1); 
+      else cx.value = ctr[0] < 0 ? (ctr[0] / 15 + 24).toFixed(1) : (ctr[0] / 15).toFixed(1); 
+      
+      cy.value = ctr[1].toFixed(1);
+      cz.value = ctr[2] !== null ? ctr[2].toFixed(1) : 0;
+    }
   };
   
   var ANIMDISTANCE = 0.035,  // Rotation animation threshold, ~2deg in radians
@@ -41,38 +56,49 @@
         width = getWidth(),
         proj = getProjection(cfg.projection);
     if (cfg.lines.graticule.lat && cfg.lines.graticule.lat.pos[0] === "outline") proj.scale -= 2;
-    
     if (!proj) return;
-        
+    
+    
     var trans = cfg.transform || "equatorial",
-        ratio = proj.ratio,
-        height = width / ratio,
-        scale = proj.scale * width/1024,
-        starbase = cfg.stars.size, 
-        dsobase = cfg.dsos.size || starbase,
-        starexp = cfg.stars.exponent,
-        dsoexp = cfg.dsos.exponent || starexp, //Object size base & exponent
-        adapt = 1,
-        rotation = getAngles(cfg.center),
-        path = cfg.datapath || "";
-        path = path.replace(/([^\/]$)/, "$1\/");
+    ratio = proj.ratio,
+    //height = width / ratio,
+    scale = proj.scale * width/1024,
+    starbase = cfg.stars.size, 
+    dsobase = cfg.dsos.size || starbase,
+    starexp = cfg.stars.exponent,
+    dsoexp = cfg.dsos.exponent || starexp, //Object size base & exponent
+    adapt = 1,
+    rotation = getAngles(cfg.center),
+    path = cfg.datapath || "";
+    path = path.replace(/([^\/]$)/, "$1\/");
+    
+    width = window.innerWidth;
+    height = window.innerHeight;
+
+    if (width < height) {
+      width = height;
+      scale = proj.scale * width/800;
+    
+    };
+
     
         
     if (par != "body") $(cfg.container).style.height = px(height);
     
-    prjMap = Celestial.projection(cfg.projection).rotate(rotation).translate([width/2, height/2]).scale(scale);
+    prjMap = Celestial.projection(cfg.projection).rotate(rotation).translate([window.innerWidth/2, height/2]).scale(scale);
       
-    zoom = d3.geo.zoom().projection(prjMap).center([width/2, height/2]).scaleExtent([scale, scale*ZOOMEXTENT]).on("zoom.redraw", redraw);
+    zoom = d3.geo.zoom().projection(prjMap).center([window.innerWidth/2, height/2]).scaleExtent([scale, scale*ZOOMEXTENT]).on("zoom.redraw", redraw);
   
     var canvas = d3.select(par).selectAll("canvas");
     if (canvas[0].length === 0) canvas = d3.select(par).append("canvas");
-    canvas.attr("width", width).attr("height", height);
+    //canvas.attr("width", width).attr("height", height);
+    canvas.attr("width", width).attr("height", '2000px');
     var context = canvas.node().getContext("2d");  
     
     var graticule = d3.geo.graticule().minorStep([15,10]);
     
     map = d3.geo.path().projection(prjMap).context(context);
-     
+    
     //parent div with id #celestial-map or body
     if (container) container.selectAll("*").remove();
     else container = d3.select(par).append("container");
@@ -84,7 +110,7 @@
   
     d3.select(window).on('resize', resize);
     d3.select(par).on('dblclick', function () { zoomBy(1.5625); return false; });
-   
+  
     if (cfg.controls === true && $("celestial-zoomin") === null) {
       d3.select(par).append("input").attr("type", "button").attr("id", "celestial-zoomin").attr("value", "\u002b").on("click", function () { zoomBy(1.25); return false; });
       d3.select(par).append("input").attr("type", "button").attr("id", "celestial-zoomout").attr("value", "\u2212").on("click", function () { zoomBy(0.8); return false; });
@@ -331,6 +357,7 @@
     
     function resize(set) {
       width = getWidth();
+      
       if (cfg.width === width && !set) return;
       height = width/ratio;
       scale = proj.scale * width/1024;
@@ -504,10 +531,11 @@
             context.fill();
             if (cfg.stars.names && d.properties.mag <= cfg.stars.namelimit*adapt) {
               setTextStyle(cfg.stars.namestyle);
-              context.fillText(starName(d), pt[0]+r, pt[1]);         
+              context.fillText(starName(d), pt[0]+r, pt[1]);    
             }
             if (cfg.stars.proper && d.properties.mag <= cfg.stars.propernamelimit*adapt) {
               setTextStyle(cfg.stars.propernamestyle);
+              
               context.fillText(starProperName(d), pt[0]-r, pt[1]);         
             }
           }
@@ -527,6 +555,7 @@
             if (cfg.dsos.names && dsoDisplay(d.properties, cfg.dsos.namelimit)) {
               setTextStyle(cfg.dsos.namestyle);
               context.fillStyle = cfg.dsos.symbols[type].fill;
+              
               context.fillText(dsoName(d), pt[0]+r, pt[1]-r);         
             }         
           }
@@ -545,6 +574,7 @@
             if (id !== "lun") {
               setTextStyle(cfg.planets.style);
               context.fillStyle = sym.fill;
+              
               context.fillText(sym.symbol, pt[0], pt[1]);
             } else {
               Canvas.symbol().type("crescent").size(144).age(p.age).position(pt)(context);
@@ -607,7 +637,10 @@
       context.fillStyle = s.fill;
       context.textAlign = s.align || "left";
       context.textBaseline = s.baseline || "bottom";
-      context.globalAlpha = s.opacity || 1;  
+      context.globalAlpha = s.opacity || 1;
+      // context.shadowOffsetX = 3;
+      // context.shadowOffsetY = 3;
+      // context.shadowColor = 'red';
       context.font = s.font;
     }
   
@@ -718,7 +751,7 @@
     function clear() {
       context.clearRect(0, 0, width + margin[0], height + margin[1]);
     }
-    
+    //console.log('test')
     function getWidth() {
       if (cfg.width && cfg.width > 0) return cfg.width;
       if (parent) return parent.clientWidth - margin[0];
@@ -2106,6 +2139,7 @@
     }
     
     function showConstellation() {
+      console.log(config.transform)
       var id = this.value, anims = [];
       if (id === "") { 
         Celestial.constellation = null;
@@ -2114,6 +2148,7 @@
       }
       var con = Celestial.constellations[id];
       config.center = con.center;
+      console.log(config.center, config.transform);
       setCenter(config.center, config.transform);
       //config.lines.graticule.lat.pos = [Round(con.center[0])];
       //config.lines.graticule.lon.pos = [Round(con.center[1])];
@@ -2281,7 +2316,7 @@
   }
   
   function setCenter(ctr, trans) {
-    var cx = $("centerx"), cy = $("centery"), cz = $("centerz");
+    var cx = document.querySelectorAll("centerx"), cy = document.querySelectorAll("centery"), cz = document.querySelectorAll("centerz");
     if (!cx || !cy) return;
     
     if (ctr === null) ctr = [0,0,0]; 

@@ -1,23 +1,11 @@
 import React, { Component } from 'react';
 
-// import './js/lib/d3.min.js';
-// import './js/lib/d3.geo.projection.js';
-//import './js/lib/celestial.min.js';
 import axios from 'axios';
 
 import './celestial.css'
+import './css/Planetarium.css'
 
 
-console.log("test")
-
-/*
-<script type="text/javascript" src="./js/lib/d3.min.js"></script>
-  <script type="text/javascript" src="./js/lib/d3.geo.projection.min.js"></script>
-  <script type="text/javascript" src="./js/lib/celestial.min.js"></script>
-  <script type="text/javascript" src="./node_modules/axios/dist/axios.js"></script>
-  <link rel="stylesheet" href="./css/celestial.css">
-
-*/
 
 export default class Planetarium extends Component {
   constructor() {
@@ -27,7 +15,8 @@ export default class Planetarium extends Component {
       loaded: false,
       showConstellations: true,
       actualConstellations: undefined,
-      config: undefined
+      config: undefined, 
+      constellationsOptions: undefined
     }
   }
 
@@ -40,21 +29,23 @@ export default class Planetarium extends Component {
         this.state.config = {
           projection: "airy",
           //projection: "equirectangular",
+          form: true,
           width: window.innerWidth,
           center: [-65, 0],
-          background: { fill: "#fafafa", stroke: "#000", opacity: 1, width: 1 },
+          //center: [180, 90],
+          background: { fill: "#160048", stroke: "#160048", opacity: 1, width: 1 },
           datapath: "./data/",
           adaptable: true, 
           stars: {
             colors: false,
             names: false,
-            style: { fill: "#000", opacity: 1 },
+            style: { fill: "#FEFFFF", opacity: 1 },
             limit: 6,
             size: 5
           },
           dsos: { show: false },
           mw: {
-            style: { fill: "#996", opacity: 0.1 }
+            style: { fill: "#2C0089", opacity: 0.1 }
           },
           constellations: {
             show: false,
@@ -63,13 +54,14 @@ export default class Planetarium extends Component {
         };
         // Asterisms canvas style properties for lines and text
         var lineStyle = {
-          stroke: "#f00",
+          stroke: "#FEFFFF",
+          opacity: ".5",
           fill: "transparent",
-          width: 3
+          width: 1
         },
           textStyle = {
-            fill: "#f00",
-            font: "bold 15px Helvetica, Arial, sans-serif",
+            fill: "#fafafa",
+            font: "bold 15px 'Open Sans', sans-serif",
             align: "center",
             baseline: "middle"
           };
@@ -78,15 +70,19 @@ export default class Planetarium extends Component {
 
         const constellationsData = data.data.culture.constellations;
 
+        let selectOptions = [];
+
         let constellations = constellationsData.map(constellation => {
+          //console.log(constellation)
+          selectOptions.push({name: constellation.name, id: constellation.id, center: constellation.points[0][0]})  
           return {
             "type": "Feature",
             "id": constellation.name,
             "properties": {
               // Name
-              "n": "",
+              "n": constellation.name,
               // Location of name text on the map
-              "loc": [-67.5, 52]
+              "loc": constellation.points[0][0]
             }, "geometry": {
               // the line object as an array of point coordinates
               "type": "MultiLineString",
@@ -94,6 +90,10 @@ export default class Planetarium extends Component {
             }
           }
         })
+
+        this.setState({...this.state, constellationsOptions: selectOptions})
+
+        //console.log(selectOptions)
 
         var jsonLine = {
           "type": "FeatureCollection",
@@ -115,7 +115,7 @@ export default class Planetarium extends Component {
               // Project objects on map
               window.Celestial.map(d);
               // draw on canvas
-              window.Celestial.context.fill();
+              //window.Celestial.context.fill();
               window.Celestial.context.stroke();
 
               // If point is visible (this doesn't work automatically for points)
@@ -136,7 +136,21 @@ export default class Planetarium extends Component {
 
         //window.Celestial.clear();
       })
+  }
 
+
+  setCenter = (ctr, trans) => {
+    var cx = window.document.querySelectorAll("centerx"), cy = window.document.querySelectorAll("centery"), cz = window.document.querySelectorAll("centerz");
+    if (!cx || !cy) return;
+    
+    if (ctr === null) ctr = [0,0,0]; 
+    if (ctr.length <= 2) ctr[2] = 0;
+    //config.center = ctr; 
+    if (trans !== "equatorial") cx.value = ctr[0].toFixed(1); 
+    else cx.value = ctr[0] < 0 ? (ctr[0] / 15 + 24).toFixed(1) : (ctr[0] / 15).toFixed(1); 
+    
+    cy.value = ctr[1].toFixed(1);
+    cz.value = ctr[2] !== null ? ctr[2].toFixed(1) : 0;
   }
 
   addConstellations = jsonLine => {
@@ -154,13 +168,85 @@ export default class Planetarium extends Component {
 
   }
 
+  changeConstellation = e => {
+    if (!e.target.value.length) return;
+    
+    const coordinates = e.target.value.split(',');
+    coordinates[0] = +coordinates[0];
+    coordinates[1] = +coordinates[1];
+    coordinates[2] = 0;
+    
+    let anims = [];
+
+    console.log(coordinates)
+
+    let configCopy = {...this.state.config};
+    configCopy.center = coordinates;
+
+    this.state.config.transform = 'arya';
+
+
+    this.setState({...this.state, config: configCopy}, () => {
+      console.log(this.state.config.center, this.state.config.transform)
+  
+      //this.setCenter(this.state.config.center, this.state.config.transform);
+  
+      var z = window.Celestial.zoomBy();
+      if (z !== 1) {
+        anims.push({param:"zoom", value:1.55/z, duration:0})
+      }
+      //rotate
+      anims.push({param:"center", value:this.state.config.center, duration:0});
+      //and zoom in
+      var sc = 2;
+      anims.push({param:"zoom", value:sc, duration:0});
+      //window.Celestial.constellation = id;
+      window.Celestial.animate(anims, false);
+
+    });
+
+
+    //console.log(configCopy)
+    
+    //console.log(this.state.constellationsOptions.indexOf(e.target.value))
+  }
+
+  setCenter= (ctr, trans) => {
+    var cx = document.querySelectorAll("centerx"), cy = document.querySelectorAll("centery"), cz = document.querySelectorAll("centerz");
+    if (!cx || !cy) return;
+    
+    if (ctr === null) ctr = [0,0,0]; 
+    if (ctr.length <= 2) ctr[2] = 0;
+    //config.center = ctr; 
+    if (trans !== "equatorial") cx.value = ctr[0].toFixed(1); 
+    else cx.value = ctr[0] < 0 ? (ctr[0] / 15 + 24).toFixed(1) : (ctr[0] / 15).toFixed(1); 
+    
+    cy.value = ctr[1].toFixed(1);
+    cz.value = ctr[2] !== null ? ctr[2].toFixed(1) : 0;
+  }
+
   render() {
+    let constellationsOptions = [];
+    if (this.state.constellationsOptions) {
+      constellationsOptions = this.state.constellationsOptions.map(constellation => {
+        //console.log(constellation);
+        return <option value={constellation.center}>{constellation.name}</option>
+      })
+      constellationsOptions.unshift(<option value=''>Select Constellation</option>)
+    }
+    //console.log('STATE', this.state.constellationsOptions)
     return (
       <React.Fragment>
         <p>Tests</p>
         <div id="Planetarium" style={{ overflow: 'hidden' }}><div id="celestial-map"></div></div>
         <div id="celestial-form"></div>
-        <div class="options"><button onClick={this.toggleConstellations}>Toggle Constellations</button></div>
+        <div class="options">
+          <button onClick={this.toggleConstellations}>Toggle Constellations</button>
+
+          <select name="constellation" id="constellation" onChange={this.changeConstellation}>
+            {constellationsOptions}
+          </select>
+        </div>
       </React.Fragment>
     )
   }

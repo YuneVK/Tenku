@@ -1,4 +1,4 @@
-/* Copyright 2015-16 Olaf Frohn https://github.com/ofrohn, see LICENSE */
+Copyright 2015-16 Olaf Frohn https://github.com/ofrohn, see LICENSE
 
 #celestial-map { width: 100%; height: auto; margin: 0; padding: 0; display: inline-block; position: relative; }
 #celestial-map canvas { display: inline-block; top:0; left: 0; position:absolute; z-index:0; cursor:hand; cursor:grab; cursor:-moz-grab; cursor:-webkit-grab; }
@@ -111,3 +111,10 @@ input[type="number"]::-webkit-outer-spin-button { height: auto; }
 #celestial-map canvas {
   /*left: -25%;*/
 }
+
+
+#params, #celestial-zoomin, #celestial-zoomout {
+  display: none;
+}
+
+
