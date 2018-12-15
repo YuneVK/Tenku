@@ -234,8 +234,9 @@
         container.selectAll(".stars")
            .data(st.features)
            .enter().append("path")
-           .attr("class", "star");
-  
+           .attr("class", "star")
+           .on("mousemove", () => console.log('mouse'));
+//console.log('STARS')        
         redraw();
       });
   
@@ -751,7 +752,6 @@
     function clear() {
       context.clearRect(0, 0, width + margin[0], height + margin[1]);
     }
-    //console.log('test')
     function getWidth() {
       if (cfg.width && cfg.width > 0) return cfg.width;
       if (parent) return parent.clientWidth - margin[0];
@@ -1090,7 +1090,6 @@
   //Add more JSON data to the map
   
   Celestial.add = function(dat) {
-    console.log('ADD', dat.name)
     delete Celestial.data;
     Celestial.data = [];
 
@@ -1107,9 +1106,7 @@
     res.type = dat.type;
     if (has(dat, "callback")) res.callback = dat.callback;
     //if (has(dat, "callback")) dat.callback();
-    if (has(dat, "callback")) console.log('callback changed');
     
-    if (has(dat, "redraw")) console.log('redraw changed');
     if (has(dat, "redraw")) res.redraw = dat.redraw;
 
     Celestial.data.name = dat.name; 

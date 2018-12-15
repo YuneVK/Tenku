@@ -1,0 +1,29 @@
+#PlanetariumControls {
+  position: absolute;
+  top: 0;
+  right: -15rem;
+  overflow: hidden;
+  max-height: 100vh;
+  display: flex;
+  align-items: center;
+  transition: all .2s ease-in-out;
+
+  &.visible {
+    right: 0;
+  }
+
+  .toggleMenu {
+
+  }
+  
+  .menu {
+    min-height: 100vh;
+    width: 15rem;
+    background: rgba(22,0,72, .7);
+
+    #celestial-form {
+      
+    }
+
+  }
+}
