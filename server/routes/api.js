@@ -62,7 +62,8 @@ router.get('/culture/:name', (req, res, next) => {
           //   return stars[pair[0]].coordinates
           // }
           console.log(stars[pair[0]], stars[pair[1]])
-          return [stars[pair[0]].coordinates,stars[pair[1]].coordinates]
+          if (stars[pair[0]] && stars[pair[1]])
+            return [stars[pair[0]].coordinates,stars[pair[1]].coordinates]
         })
         
         const {id, name, cultureName, points} = constellation;

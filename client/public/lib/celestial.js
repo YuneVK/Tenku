@@ -1090,6 +1090,10 @@
   //Add more JSON data to the map
   
   Celestial.add = function(dat) {
+    console.log('ADD', dat.name)
+    delete Celestial.data;
+    Celestial.data = [];
+
     var res = {};
     //dat: {file: path, type:'json|raw', callback: func(), redraw: func()} 
     //or {file:file, size:null, shape:null, color:null}  TBI
@@ -1102,7 +1106,14 @@
     if (has(dat, "file")) res.file = dat.file;
     res.type = dat.type;
     if (has(dat, "callback")) res.callback = dat.callback;
+    //if (has(dat, "callback")) dat.callback();
+    if (has(dat, "callback")) console.log('callback changed');
+    
+    if (has(dat, "redraw")) console.log('redraw changed');
     if (has(dat, "redraw")) res.redraw = dat.redraw;
+
+    Celestial.data.name = dat.name; 
+
     Celestial.data.push(res);
   };
   
