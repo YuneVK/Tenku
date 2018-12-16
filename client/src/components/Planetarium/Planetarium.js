@@ -17,8 +17,8 @@ export default class Planetarium extends Component {
     this.state = {
       loaded: false,
       showConstellations: true,
-      config: config.celestial, 
-      activeCulture: 'western'
+      config: config.celestial,
+      activeCulture: 'western', 
     }
   }
 
@@ -32,7 +32,7 @@ export default class Planetarium extends Component {
   }
 
   changeCulture = e => {
-    this.setState({...this.state, activeCulture: e.target.value})
+    this.setState({ ...this.state, activeCulture: e.target.value })
     window.Celestial.clear();
     window.Celestial.redraw();
     Constellations.paintConstellations(e.target.value, this.state, config)
@@ -53,18 +53,18 @@ export default class Planetarium extends Component {
 
   toggleStars = (show, config) => {
     //console.log(config);
-    const {proper, names, desig} = config;
+    const { proper, names, desig } = config;
 
     //console.log(proper, names, desig)
 
-    const configCopy = {...this.state.config};
+    const configCopy = { ...this.state.config };
     configCopy.stars.proper = proper;
     configCopy.stars.names = names;
     configCopy.stars.desig = desig;
 
     //console.log(configCopy)
 
-    this.setState({...this.state, config: configCopy}, () => {
+    this.setState({ ...this.state, config: configCopy }, () => {
       //console.log(this.state)
       window.Celestial.apply(this.state.config);
     })
@@ -98,6 +98,36 @@ export default class Planetarium extends Component {
     });
   }
 
+  setPlanetsAnimation = () => {
+    console.log('creating events')
+      let reqID,
+      reqAnimFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame || window.msRequestAnimationFrame ||
+        window.oRequestAnimationFrame,
+      cncAnimFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame ||
+        window.webkitCancelAnimationFrame || window.msCancelAnimationFrame ||
+        window.oCancelAnimationFrame,
+      dt = new Date(document.querySelector('#datetime').value);
+
+    function animate() {
+      reqID = reqAnimFrame(animate);
+      dt.setDate(dt.getDate() + 1);
+      window.Celestial.date(dt);
+    }
+
+    window.d3.select('#celestial-map').on('mousedown', function () { cncAnimFrame(reqID) })
+    window.d3.select('#celestial-map').on('mouseup', function () { reqAnimFrame(animate) })
+    window.d3.select('#planets-animation').on('click', function () { 
+      cncAnimFrame(reqID);
+      window.d3.select('#celestial-map').on('mousedown', null )
+      window.d3.select('#celestial-map').on('mouseup', null)
+    })
+
+    reqID = reqAnimFrame(animate);
+
+  }
+
+
 
 
   render() {
@@ -105,12 +135,13 @@ export default class Planetarium extends Component {
       <React.Fragment>
         <div id="Planetarium" style={{ overflow: 'hidden' }}><div id="celestial-map"></div></div>
 
-        <PlanetariumControls 
+        <PlanetariumControls
           toggleConstellations={this.toggleConstellations}
-          toggleStars={this.toggleStars} 
+          toggleStars={this.toggleStars}
           changeCulture={this.changeCulture}
           navigateToConstellation={this.navigateToConstellation}
           constellationsOptions={this.state.constellationsOptions}
+          setPlanetsAnimation={this.setPlanetsAnimation} 
         />
       </React.Fragment>
     )

@@ -9,13 +9,17 @@ const Constellation =  {
         let selectOptions = [];
 
         let constellations = constellationsData.map(constellation => {
-          selectOptions.push({ name: constellation.name, id: constellation.id, center: constellation.points[0][0] })
+          const center = Constellation.calculateCenter(constellation);
+          console.log(center)
+
+
+          selectOptions.push({ name: constellation.name, id: constellation.id, center: center })
           return {
             "type": "Feature",
             "id": constellation.name,
             "properties": {
               "n": constellation.name,
-              "loc": constellation.points[0][0]
+              "loc": center
             }, "geometry": {
               "type": "MultiLineString",
               "coordinates": constellation.points
@@ -60,6 +64,28 @@ const Constellation =  {
         return selectOptions
       })
   }, 
+
+  calculateCenter: constellation => {
+    console.log('calculating center of', constellation.points);
+    let points = [];
+    let ra = [];
+    let dec = [];
+
+    constellation.points.forEach(pair => {
+      points.push(pair[0], pair[1])
+    })
+    
+    points.forEach(point => {
+      ra.push(point[0]);
+      dec.push(point[1])
+      
+    })
+
+    const averageRa = (Math.max(...ra) + Math.min(...ra))/2;
+    const averageDec = (Math.max(...dec) + Math.min(...dec))/2;
+
+    return [averageRa, averageDec]
+  },
 
   addConstellationsD3: (jsonLine, state) => {
     var asterism = window.Celestial.getData(jsonLine, state.config.transform);

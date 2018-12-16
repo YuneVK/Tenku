@@ -79,6 +79,15 @@ export default class PlanetariumControls extends Component {
     })
   }
 
+  setPlanetsAnimation = e => {
+    const activated = Utils.toggleClass(e.target, 'on');
+
+    e.target.innerHTML = activated ? 'Stop Planets Animation' : 'Start Planets Animation';
+
+    console.log(activated)
+    if (activated) this.props.setPlanetsAnimation();
+  }
+
   render() {
     let constellationsOptions = [];
     if (this.props.constellationsOptions) {
@@ -124,9 +133,14 @@ export default class PlanetariumControls extends Component {
             <p>Date and Time</p>
             {/* <div id="date"></div> */}
             <div id="celestial-form"></div>
+
           </section>
 
+          <section>
+            <p>Animation</p>
 
+            <button id="planets-animation" onClick={this.setPlanetsAnimation}>Start Planets Animation</button>
+          </section>
         </div>
       </div>
     )
