@@ -84,7 +84,6 @@ export default class PlanetariumControls extends Component {
 
     e.target.innerHTML = activated ? 'Stop Planets Animation' : 'Start Planets Animation';
 
-    console.log(activated)
     if (activated) this.props.setPlanetsAnimation();
   }
 

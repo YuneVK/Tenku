@@ -10,8 +10,6 @@ const Constellation =  {
 
         let constellations = constellationsData.map(constellation => {
           const center = Constellation.calculateCenter(constellation);
-          console.log(center)
-
 
           selectOptions.push({ name: constellation.name, id: constellation.id, center: center })
           return {
@@ -66,7 +64,6 @@ const Constellation =  {
   }, 
 
   calculateCenter: constellation => {
-    console.log('calculating center of', constellation.points);
     let points = [];
     let ra = [];
     let dec = [];

@@ -23,12 +23,19 @@ export default class Planetarium extends Component {
   }
 
   componentDidMount() {
+    window.Celestial.display(this.state.config);
+    window.Celestial.zoomBy(1.5);
+    this.getCoordinates();
     Constellations.paintConstellations('western', this.state, config)
       .then(navigationOptions => {
         this.setState({ ...this.state, constellationsOptions: navigationOptions })
-        window.Celestial.display(this.state.config);
-        window.Celestial.zoomBy(1.5);
       });
+  }
+
+  getCoordinates = () => {
+    var element = document.getElementById('here');
+    var event = new Event('click');
+    element.dispatchEvent(event);
   }
 
   changeCulture = e => {
@@ -52,23 +59,16 @@ export default class Planetarium extends Component {
   }
 
   toggleStars = (show, config) => {
-    //console.log(config);
     const { proper, names, desig } = config;
-
-    //console.log(proper, names, desig)
 
     const configCopy = { ...this.state.config };
     configCopy.stars.proper = proper;
     configCopy.stars.names = names;
     configCopy.stars.desig = desig;
 
-    //console.log(configCopy)
-
     this.setState({ ...this.state, config: configCopy }, () => {
-      //console.log(this.state)
       window.Celestial.apply(this.state.config);
     })
-
   }
 
   navigateToConstellation = e => {
@@ -99,7 +99,6 @@ export default class Planetarium extends Component {
   }
 
   setPlanetsAnimation = () => {
-    console.log('creating events')
       let reqID,
       reqAnimFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
         window.webkitRequestAnimationFrame || window.msRequestAnimationFrame ||
@@ -124,11 +123,7 @@ export default class Planetarium extends Component {
     })
 
     reqID = reqAnimFrame(animate);
-
   }
-
-
-
 
   render() {
     return (
