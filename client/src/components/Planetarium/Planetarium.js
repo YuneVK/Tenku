@@ -23,13 +23,17 @@ export default class Planetarium extends Component {
   }
 
   componentDidMount() {
-    window.Celestial.display(this.state.config);
-    window.Celestial.zoomBy(1.5);
-    this.getCoordinates();
     Constellations.paintConstellations('western', this.state, config)
-      .then(navigationOptions => {
-        this.setState({ ...this.state, constellationsOptions: navigationOptions })
+    .then(navigationOptions => {
+      this.setState({ ...this.state, constellationsOptions: navigationOptions })
+      window.Celestial.display(this.state.config);
+      window.Celestial.zoomBy(1.5);
       });
+  }
+
+  componentWillUnmount = () => {
+    let canvas = document.querySelector('canvas');
+    document.querySelector('#celestial-map').removeChild(canvas);
   }
 
   getCoordinates = () => {
@@ -117,6 +121,12 @@ export default class Planetarium extends Component {
     window.d3.select('#celestial-map').on('mousedown', function () { cncAnimFrame(reqID) })
     window.d3.select('#celestial-map').on('mouseup', function () { reqAnimFrame(animate) })
     window.d3.select('#planets-animation').on('click', function () { 
+      cncAnimFrame(reqID);
+      window.d3.select('#celestial-map').on('mousedown', null )
+      window.d3.select('#celestial-map').on('mouseup', null)
+    })
+
+    window.d3.select('.solar-system').on('click', function () { 
       cncAnimFrame(reqID);
       window.d3.select('#celestial-map').on('mousedown', null )
       window.d3.select('#celestial-map').on('mouseup', null)

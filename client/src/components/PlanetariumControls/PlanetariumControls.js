@@ -4,6 +4,8 @@ import './PlanetariumControls.scss'
 
 import Utils from './Utils'
 
+import { NavLink } from 'react-router-dom'
+
 export default class PlanetariumControls extends Component {
   constructor() {
     super();
@@ -140,6 +142,8 @@ export default class PlanetariumControls extends Component {
 
             <button id="planets-animation" onClick={this.setPlanetsAnimation}>Start Planets Animation</button>
           </section>
+
+          <NavLink strict to="/solar-system/" className="solar-system">Go to Solar System</NavLink>
         </div>
       </div>
     )
