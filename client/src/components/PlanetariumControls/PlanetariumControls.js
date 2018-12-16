@@ -14,7 +14,7 @@ export default class PlanetariumControls extends Component {
       stars: {
         proper: false,
         names: false,
-        design: false
+        desig: false
       },
       dtFormat: window.d3.time.format("%Y-%m-%d %H:%M:%S"),
       zenith: [0, 0],
@@ -39,25 +39,21 @@ export default class PlanetariumControls extends Component {
   }
 
   toggleStarsNames = (e, callback, option) => {
-    console.log(option);
     let starsConfig = {...this.state.stars};
-    console.log(starsConfig)
     let hasClass = Utils.toggleClass(e.target, 'on');
 
-    //let config = {stars: {}};
     starsConfig[option] = hasClass; 
+
+    if (!starsConfig.names) {
+      starsConfig.desig = false;
+      document.querySelector('#all-designations').innerHTML = 'Show All Designations';
+      Utils.removeClass(document.querySelector('#all-designations'), 'on');
+    }
 
     if (starsConfig.desig) {
       starsConfig.names = true
       document.querySelector('#designations').innerHTML = 'Hide Designations';
     }
-
-    if (!starsConfig.names) {
-      starsConfig.desig = false;
-      document.querySelector('#all-designations').innerHTML = 'Show All Designations';
-    }
-
-
 
     switch (option) {
       case 'proper':
@@ -65,6 +61,11 @@ export default class PlanetariumControls extends Component {
         break;
 
       case 'names':
+        if (!hasClass) {
+          starsConfig.desig = false;
+          starsConfig.names = false;
+          document.querySelector('#all-designations').innerHTML = 'Show All Designations';
+        }
         e.target.innerHTML = hasClass ? 'Hide Designations' : 'Show Designations';
         break;
 
@@ -75,9 +76,7 @@ export default class PlanetariumControls extends Component {
 
     this.setState({...this.state, stars: starsConfig}, () => {
       callback(hasClass, this.state.stars)
-
     })
-
   }
 
   render() {

@@ -52,20 +52,20 @@ export default class Planetarium extends Component {
   }
 
   toggleStars = (show, config) => {
-    console.log(config);
+    //console.log(config);
     const {proper, names, desig} = config;
 
-    console.log(proper, names, desig)
+    //console.log(proper, names, desig)
 
     const configCopy = {...this.state.config};
     configCopy.stars.proper = proper;
     configCopy.stars.names = names;
     configCopy.stars.desig = desig;
 
-    console.log(configCopy)
+    //console.log(configCopy)
 
     this.setState({...this.state, config: configCopy}, () => {
-      console.log(this.state)
+      //console.log(this.state)
       window.Celestial.apply(this.state.config);
     })
 
