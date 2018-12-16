@@ -17,7 +17,7 @@ const cors = require('cors');
     
 
 mongoose
-  .connect('mongodb://localhost/server', {useNewUrlParser: true})
+  .connect(process.env.MONGODB_URI, {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -90,5 +90,10 @@ app.use('/auth', authRoutes);
 const apiRoutes = require('./routes/api');
 app.use('/api', apiRoutes);
 
+//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use((req, res, next) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 module.exports = app;

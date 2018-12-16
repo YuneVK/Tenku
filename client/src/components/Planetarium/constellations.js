@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const Constellation =  {
   paintConstellations: (name, state, config) => {
-    return axios.get('http://127.0.0.1:5000/api/culture/' + name)
+    return axios.get(`${process.env.REACT_APP_API_URL}/api/culture/` + name)
       .then(data => {
         const constellationsData = data.data.culture.constellations;
 
