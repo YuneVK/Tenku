@@ -17,7 +17,8 @@ export default class Planetarium extends Component {
     this.state = {
       loaded: false,
       showConstellations: true,
-      config: config.celestial
+      config: config.celestial, 
+      activeCulture: 'western'
     }
   }
 
@@ -31,6 +32,7 @@ export default class Planetarium extends Component {
   }
 
   changeCulture = e => {
+    this.setState({...this.state, activeCulture: e.target.value})
     window.Celestial.clear();
     window.Celestial.redraw();
     Constellations.paintConstellations(e.target.value, this.state, config)
@@ -40,8 +42,33 @@ export default class Planetarium extends Component {
   }
 
 
-  toggleConstellations = () => {
-    console.log('toggle constellation')
+  toggleConstellations = show => {
+    if (show) {
+      Constellations.paintConstellations(this.state.activeCulture, this.state, config)
+    } else {
+      document.querySelectorAll("path.ast").forEach(e => e.parentNode.removeChild(e));
+      window.Celestial.redraw();
+    }
+  }
+
+  toggleStars = (show, config) => {
+    console.log(config);
+    const {proper, names, desig} = config;
+
+    console.log(proper, names, desig)
+
+    const configCopy = {...this.state.config};
+    configCopy.stars.proper = proper;
+    configCopy.stars.names = names;
+    configCopy.stars.desig = desig;
+
+    console.log(configCopy)
+
+    this.setState({...this.state, config: configCopy}, () => {
+      console.log(this.state)
+      window.Celestial.apply(this.state.config);
+    })
+
   }
 
   navigateToConstellation = e => {
@@ -80,6 +107,7 @@ export default class Planetarium extends Component {
 
         <PlanetariumControls 
           toggleConstellations={this.toggleConstellations}
+          toggleStars={this.toggleStars} 
           changeCulture={this.changeCulture}
           navigateToConstellation={this.navigateToConstellation}
           constellationsOptions={this.state.constellationsOptions}

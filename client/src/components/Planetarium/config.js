@@ -14,7 +14,15 @@ export default {
       names: false,
       style: { fill: "#FEFFFF", opacity: 1 },
       limit: 6,
-      size: 5
+      size: 5,
+      namestyle: {
+        fill: "#ddddbb", font: "11px 'Open Sans', sans-serif",
+        align: "left", baseline: "top"
+      },  // Style for star designations
+      propernamestyle: {
+        fill: "#ddddbb", font: "11px 'Open Sans', sans-serif",
+        align: "right", baseline: "bottom"
+      }, // Styles for star names
     },
     dsos: { show: false },
     mw: {

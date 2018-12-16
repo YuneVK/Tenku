@@ -22,7 +22,10 @@
     background: rgba(22,0,72, .7);
 
     #celestial-form {
-      
+
+      label[for="planets-show"], label[for="horizon-show"], #horizon-show, #planets-show {
+        display: none;
+      }
     }
 
   }
