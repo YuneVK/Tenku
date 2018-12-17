@@ -10,6 +10,8 @@ import celestialUtils from './celestial-utils'
 import Constellations from './constellations'
 import PlanetariumControls from '../PlanetariumControls/PlanetariumControls';
 
+import Aside from '../Aside/Aside'
+
 export default class Planetarium extends Component {
   constructor() {
     super();
@@ -138,6 +140,8 @@ export default class Planetarium extends Component {
   render() {
     return (
       <React.Fragment>
+        <Aside orientation="left" ><h1>test</h1></Aside>
+
         <div id="Planetarium" style={{ overflow: 'hidden' }}><div id="celestial-map"></div></div>
 
         <PlanetariumControls

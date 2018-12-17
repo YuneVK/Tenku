@@ -6,6 +6,14 @@ import Utils from './Utils'
 
 import { NavLink } from 'react-router-dom'
 
+import Select from '../Select/Select'
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+]
+
 export default class PlanetariumControls extends Component {
   constructor() {
     super();
@@ -28,8 +36,9 @@ export default class PlanetariumControls extends Component {
 
   toggleMenu = e => {
     let hasClass = Utils.toggleClass(document.querySelector('#PlanetariumControls'), 'visible');
+    Utils.toggleClass(e.target, 'active');
 
-    e.target.innerHTML = hasClass ? 'Close Controls' : 'Open Controls';
+    //e.target.innerHTML = hasClass ? 'Close Controls' : 'Open Controls';
   }
 
   toggleConstellations = (e, callback) => {
@@ -91,18 +100,24 @@ export default class PlanetariumControls extends Component {
 
   render() {
     let constellationsOptions = [];
+    let constellationSelect = [{value: '', label: 'Select a Constellation'}];
     if (this.props.constellationsOptions) {
       constellationsOptions = this.props.constellationsOptions.map(constellation => {
+        //return { value: constellation.center, label: constellation.name }
+        constellationSelect.push({ value: constellation.center, label: constellation.name });
         return <option value={constellation.center}>{constellation.name}</option>
       })
-      constellationsOptions.unshift(<option value=''>Select Constellation</option>)
+      console.log(constellationSelect)
+      //constellationsOptions.unshift({ value: '', label: 'Select Constellation' })
+      //constellationsOptions.unshift(<option value=''>Select a Constellation</option>)
+      //constellationsOptions.unshit({value: '', label: 'Select a Constellation'})
     }
 
     return (
       <div id="PlanetariumControls">
-        <button class="toggleMenu" onClick={this.toggleMenu}>Open Controls</button>
+        <button className="button toggleMenu" onClick={this.toggleMenu}><div></div></button>
 
-        <div class="menu">
+        <div className="menu">
           <section>
             <p>Constellations</p>
             <select name="culture" id="culture" onChange={this.props.changeCulture}>
@@ -113,21 +128,22 @@ export default class PlanetariumControls extends Component {
               <option value="egyptian">Egyptian</option>
             </select>
 
-            <select name="constellation" id="constellation" onChange={this.props.navigateToConstellation}>
+            <Select name="constellation" id="constellation" options={constellationSelect} onChange={this.props.navigateToConstellation}/>
+            {/* <select name="constellation" id="constellation" onChange={this.props.navigateToConstellation}>
               {constellationsOptions}
-            </select>
+            </select> */}
 
-            <button className="on" onClick={e => this.toggleConstellations(e, this.props.toggleConstellations)}>Hide Constellations</button>
+            <button className="on button" onClick={e => this.toggleConstellations(e, this.props.toggleConstellations)}>Hide Constellations</button>
           </section>
 
           <section>
             <p>Stars</p>
 
-            <button onClick={e => this.toggleStarsNames(e, this.props.toggleStars, 'proper')}>Show Proper Names</button>
-            <button id="designations" onClick={e => this.toggleStarsNames(e, this.props.toggleStars, 'names')}>Show Designations</button>
-            <span>Bayer, Flamsteed, Variable star, Gliese</span>
-            <button id="all-designations" onClick={e => this.toggleStarsNames(e, this.props.toggleStars, 'desig')}>Show All Designations</button>
-            <span>Including Draper and Hipparcos</span>
+            <button className="button" onClick={e => this.toggleStarsNames(e, this.props.toggleStars, 'proper')}>Show Proper Names</button>
+            <button className="button" id="designations" onClick={e => this.toggleStarsNames(e, this.props.toggleStars, 'names')}>Show Designations</button>
+            <span className="starInfo">Bayer, Flamsteed, Variable star, Gliese</span>
+            <button className="button" id="all-designations" onClick={e => this.toggleStarsNames(e, this.props.toggleStars, 'desig')}>Show All Designations</button>
+            <span className="starInfo">Including Draper and Hipparcos</span>
           </section>
 
           <section>
@@ -140,7 +156,7 @@ export default class PlanetariumControls extends Component {
           <section>
             <p>Animation</p>
 
-            <button id="planets-animation" onClick={this.setPlanetsAnimation}>Start Planets Animation</button>
+            <button className="button" id="planets-animation" onClick={this.setPlanetsAnimation}>Start Planets Animation</button>
           </section>
 
           <NavLink strict to="/solar-system/" className="solar-system">Go to Solar System</NavLink>
