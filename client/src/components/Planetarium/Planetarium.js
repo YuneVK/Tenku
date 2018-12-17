@@ -11,6 +11,7 @@ import Constellations from './constellations'
 import PlanetariumControls from '../PlanetariumControls/PlanetariumControls';
 
 import Aside from '../Aside/Aside'
+import CultureSelector from '../CultureSelector/CultureSelector'
 
 export default class Planetarium extends Component {
   constructor() {
@@ -140,7 +141,9 @@ export default class Planetarium extends Component {
   render() {
     return (
       <React.Fragment>
-        <Aside orientation="left" ><h1>test</h1></Aside>
+        <Aside orientation="left" >
+          <CultureSelector constellationsOptions={this.state.constellationsOptions}/>
+        </Aside>
 
         <div id="Planetarium" style={{ overflow: 'hidden' }}><div id="celestial-map"></div></div>
 

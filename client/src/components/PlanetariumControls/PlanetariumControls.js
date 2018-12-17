@@ -129,9 +129,9 @@ export default class PlanetariumControls extends Component {
             </select>
 
             <Select name="constellation" id="constellation" options={constellationSelect} onChange={this.props.navigateToConstellation}/>
-            {/* <select name="constellation" id="constellation" onChange={this.props.navigateToConstellation}>
+            <select name="constellation" id="constellation" onChange={this.props.navigateToConstellation}>
               {constellationsOptions}
-            </select> */}
+            </select>
 
             <button className="on button" onClick={e => this.toggleConstellations(e, this.props.toggleConstellations)}>Hide Constellations</button>
           </section>

@@ -1,0 +1,140 @@
+.CultureSelector {
+  display: flex;
+  height: 100%;
+
+  .buttons, .info {
+    padding: 1rem;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    min-width: 13rem;
+
+    h1 {
+      text-transform: uppercase;
+      font-size: 1rem;
+      text-align: left;
+      opacity: .7;
+      font-weight: 500;
+    }
+
+    button {
+      margin: 1rem 0;
+      padding: 1.5rem 1rem;
+      background: transparent;
+      border: 2px solid #fff;
+      border-radius: 5px;
+      text-align: right;
+      padding-right: 1.3rem;
+      font-size: 1.1rem;
+      // font-weight: 600;
+      letter-spacing: .025rem;
+      color: #fff;
+      text-transform: uppercase;
+      cursor: pointer;
+      background-position: -20% center;
+      background-size: 45%;
+      background-repeat: no-repeat;
+      font-weight: 600;
+      transition: all .2s ease-in-out;
+
+      &.western {
+        border-color: #62C953;
+        color: #62C953;
+        background-image: url('/images/icons/sun.svg');
+
+        &:hover, &.active {
+          background-color: #62C953;
+          color: #fff;
+          background-image: url('/images/icons/sun-white.svg')
+        }
+      }
+
+      &.chinese {
+        background-size: 40%;
+        background-image: url('/images/icons/congratulations.svg');
+        border-color: #E6001C;
+        color: #E6001C;
+
+        &:hover, &.active {
+          background-color: #E6001C;
+          color: #fff;
+          background-image: url('/images/icons/congratulations-white.svg')
+        }
+      }
+
+      &.aztec {
+        background-image: url('/images/icons/aztec-gold.svg');
+        border-color: #EBAC00;
+        color: #EBAC00;
+
+        &:hover, &.active {
+          background-color: #EBAC00;
+          color: #fff;
+          background-image: url('/images/icons/aztec-gold-white.svg');
+        }
+      }
+
+      &.romanian {
+        background-size: 40%;
+        background-position: -10% center;
+        background-image: url('/images/icons/helmet.svg');
+        color: #2864A3;
+        border-color: #2864A3;
+
+        &:hover, &.active {
+          background-color: #2864A3;
+          color: #fff;
+          background-image: url('/images/icons/helmet-white.svg');
+        }
+      }
+
+      &.egyptian {
+        background-image: url('/images/icons/pharaoh.svg');
+        color: #ED7300;
+        border-color: #ED7300;
+
+        &:hover, &.active {
+          background-color: #ED7300;
+          color: #fff;
+          background-image: url('/images/icons/pharaoh-white.svg');
+
+        }
+      }
+    }
+  }
+
+  .info {
+    max-width: 20rem;
+    padding: 2rem;
+    text-align: right;
+
+    h2 {
+      margin-top: 0;
+    }
+
+    .Select {
+      width: 80%;
+      float: right;
+    }
+
+    &.western {
+      h2 {
+        color: #62C953;
+      }
+    }
+
+    &.chinese {
+    }
+
+    &.aztec {
+    }
+
+    &.romanian {
+    }
+
+    &.egyptian {
+    }
+  }
+}
