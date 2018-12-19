@@ -104,7 +104,7 @@ export default class PlanetariumControls extends Component {
         <div className="stars-options">
           <button className="button" onClick={e => this.toggleStarsNames(e, this.props.toggleStars, 'proper')}>Show Proper Names</button>
           <button className="button" id="designations" onClick={e => this.toggleStarsNames(e, this.props.toggleStars, 'designations')}>Show Designations</button>
-          <NavLink strict to="/solar-system/" className="solar-system">Go to Solar System</NavLink>
+          {/* <NavLink strict to="/solar-system/" className="solar-system">Go to Solar System</NavLink> */}
         </div>
         <div className="menu" style={{ display: 'none' }}>
           <section>

@@ -17,12 +17,9 @@ export default class CultureSelector extends Component {
       info: cultures.western
     }
 
-    console.log(this.state)
   }
 
   changeCulture = culture => {
-    console.log(culture);
-    //console.log(cultures.indexOf(culture))
     this.setState({...this.state, active: culture, info: cultures[culture]}, () => {
       this.props.changeCulture(culture);
       this.props.changeVisibility();
@@ -30,7 +27,6 @@ export default class CultureSelector extends Component {
   }
 
   changeInfo = culture => {
-    console.log(culture)
     this.setState({...this.state, info: cultures[culture]})
   }
 
@@ -67,13 +63,11 @@ export default class CultureSelector extends Component {
           })} */}
         </div>
 
-        <div className="info">
+        <div className={`info ${this.state.info.id}`}>
           <h2>{this.state.info.title}</h2>
 
           <div className="info-content">
             <p className="constellations"><span>{this.state.info.constellations}</span> constellations</p>
-            {/* <p className="stars"><span>400</span> stars</p> */}
-
             <p className="text">{this.state.info.description}</p>
           </div>
 

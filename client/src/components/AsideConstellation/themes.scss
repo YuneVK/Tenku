@@ -1,0 +1,207 @@
+.AsideConstellation {
+  
+
+  &.western {
+    $baseColor: #62C953;
+
+    .AsideButtonConstellation, & > .content, .Select .options .option {
+      background: $baseColor;
+    }
+
+    .Select .options .option:hover {
+      background: #fff;
+    }
+
+    .Select .header.active, .Select .options .option:hover {
+      color: $baseColor;
+    }
+
+    .AsideButtonConstellation:after, .AsideButtonConstellation:before {
+      border-left-color: $baseColor;
+    }
+
+    & > .content:before, & > .content:after {
+      border-top-color: $baseColor;
+    }
+
+    .Select .header.active div {
+      border-color: $baseColor;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: $baseColor; 
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: lighten($baseColor, 20%);  
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: darken($baseColor, 20%); 
+    }
+  }
+
+  &.chinese {
+    $baseColor: #E6001C;
+
+    .AsideButtonConstellation, & > .content, .Select .options .option {
+      background: $baseColor;
+    }
+
+    .Select .options .option:hover {
+      background: #fff;
+    }
+
+    .Select .header.active, .Select .options .option:hover {
+      color: $baseColor;
+    }
+
+    .AsideButtonConstellation:after, .AsideButtonConstellation:before {
+      border-left-color: $baseColor;
+    }
+
+    & > .content:before, & > .content:after {
+      border-top-color: $baseColor;
+    }
+
+    .Select .header.active div {
+      border-color: $baseColor;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: $baseColor; 
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: lighten($baseColor, 20%);  
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: darken($baseColor, 20%); 
+    }
+  }
+
+  &.aztec {
+    $baseColor: #EBAC00;
+
+    .AsideButtonConstellation, & > .content, .Select .options .option {
+      background: $baseColor;
+    }
+
+    .Select .options .option:hover {
+      background: #fff;
+    }
+
+    .Select .header.active, .Select .options .option:hover {
+      color: $baseColor;
+    }
+
+    .AsideButtonConstellation:after, .AsideButtonConstellation:before {
+      border-left-color: $baseColor;
+    }
+
+    & > .content:before, & > .content:after {
+      border-top-color: $baseColor;
+    }
+
+    .Select .header.active div {
+      border-color: $baseColor;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: $baseColor; 
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: lighten($baseColor, 20%);  
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: darken($baseColor, 20%); 
+    }
+  }
+
+  &.romanian {
+    $baseColor: #2864A3;
+
+    .AsideButtonConstellation, & > .content, .Select .options .option {
+      background: $baseColor;
+    }
+
+    .Select .options .option:hover {
+      background: #fff;
+    }
+
+    .Select .header.active, .Select .options .option:hover {
+      color: $baseColor;
+    }
+
+    .AsideButtonConstellation:after, .AsideButtonConstellation:before {
+      border-left-color: $baseColor;
+    }
+
+    & > .content:before, & > .content:after {
+      border-top-color: $baseColor;
+    }
+
+    .Select .header.active div {
+      border-color: $baseColor;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: $baseColor; 
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: lighten($baseColor, 20%);  
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: darken($baseColor, 20%); 
+    }
+  }
+
+  &.egyptian {
+    $baseColor: #ED7300;
+
+    .AsideButtonConstellation, & > .content, .Select .options .option {
+      background: $baseColor;
+    }
+
+    .Select .options .option:hover {
+      background: #fff;
+    }
+
+    .Select .header.active, .Select .options .option:hover {
+      color: $baseColor;
+    }
+
+    .AsideButtonConstellation:after, .AsideButtonConstellation:before {
+      border-left-color: $baseColor;
+    }
+
+    & > .content:before, & > .content:after {
+      border-top-color: $baseColor;
+    }
+
+    .Select .header.active div {
+      border-color: $baseColor;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: $baseColor; 
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: lighten($baseColor, 20%);  
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: darken($baseColor, 20%); 
+    }
+  }
+
+  
+
+
+}

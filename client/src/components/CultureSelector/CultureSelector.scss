@@ -116,9 +116,29 @@
     padding: 2rem;
     text-align: left;
     position: relative;
+    z-index: 1;
+    font-size: 1.1rem;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0; 
+      left: 0;
+      width: 100%; 
+      height: 100%;  
+      opacity: .2; 
+      z-index: -1;
+      
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: bottom;  
+    }
 
     h2 {
       margin-top: 0;
+      font-size: 1.7rem;
+      text-transform: uppercase;
+      letter-spacing: .025rem;
     }
 
     p.constellations, p.stars {
@@ -142,21 +162,68 @@
     }
 
     &.western {
-      h2 {
-        color: #62C953;
+      background-color: #62C953;
+      // h2, p.constellations span {
+      //   color: #62C953;
+      // }
+
+      &:after {
+        background-image: url('/images/illustrations/greek.png');
       }
     }
 
     &.chinese {
+      background-color: #E6001C;
+
+      &:after {
+        background-image: url('/images/illustrations/dragon.png');
+        background-position: 4rem 2rem;
+        background-size: 100%;
+      }
+      // h2, p.constellations span {
+      //   color: #E6001C;
+      // }
     }
 
     &.aztec {
+      background-color: #EBAC00;
+      color: #212121;
+      
+      &:after {
+        background-image: url('/images/illustrations/aztec.png');
+        background-position: center left;
+        background-size: 200%;
+        opacity: .1;
+      }
+
+      // h2, p.constellations span {
+      //   color: #EBAC00;
+      // }
     }
 
     &.romanian {
+      background-color: #2864A3;
+
+      &:after {
+        background-image: url('/images/illustrations/roman.png');
+        background-size: 150%;
+        background-position-x: left;
+      }
+      // h2, p.constellations span {
+      //   color: #2864A3;
+      // }
     }
 
     &.egyptian {
+      background-color: #ED7300;
+      
+      &:after {
+        background-image: url('/images/illustrations/egypt.png');
+        background-position-x: 5rem;
+      }
+      // h2, p.constellations span {
+      //   color: #ED7300;
+      // }
     }
   }
 }

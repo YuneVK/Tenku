@@ -51,13 +51,17 @@ export default class Planetarium extends Component {
   }
 
   changeCulture = culture => {
-    this.setState({ ...this.state, activeCulture: culture })
-    window.Celestial.clear();
-    window.Celestial.redraw();
-    Constellations.paintConstellations(culture, this.state, config)
-      .then(navigationOptions => {
-        this.setState({ ...this.state, constellationsOptions: navigationOptions, asideCultures: false })
-      })
+    console.log('new culture', culture)
+    this.setState({ ...this.state, activeCulture: culture }, () => {
+      console.log('active culture changed, new culture is ', this.state.activeCulture)
+      window.Celestial.clear();
+      window.Celestial.redraw();
+      Constellations.paintConstellations(culture, this.state, config)
+        .then(navigationOptions => {
+          console.log('options changed', culture)
+          this.setState({ ...this.state, constellationsOptions: navigationOptions, asideCultures: false, activeCulture: culture })
+        })
+    })
   }
 
 
@@ -157,9 +161,11 @@ export default class Planetarium extends Component {
       })
     }
 
+    console.log('culture to sends', this.state.activeCulture)
+
     return (
       <React.Fragment>
-        <CultureInfo />
+        <CultureInfo culture={this.state.activeCulture} />
 
         <Aside orientation="left" visible={this.state.asideCultures}>
           <CultureSelector
@@ -170,7 +176,7 @@ export default class Planetarium extends Component {
           />
         </Aside>
 
-        <AsideConstellation>
+        <AsideConstellation culture={this.state.activeCulture}>
           <Select name="constellation" id="constellation-select" options={constellationSelect} navigateToConstellation={this.navigateToConstellation} />
         </AsideConstellation>
 

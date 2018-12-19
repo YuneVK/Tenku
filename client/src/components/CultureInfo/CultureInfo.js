@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
 import './CultureInfo.scss'
 
-import cultures from '../CultureSelector/cultures'
+import cultures from './data'
 
 export default class CultureInfo extends Component {
   render() {
-    console.log(cultures)
+    const culture = cultures[this.props.culture]
+
+    console.log(culture);
+
     return (
-      <div className="CultureInfo western">
-        <img src="/images/icons/sun.svg" alt="Western"/>
-        <h1>Western</h1>        
+      <div className={`CultureInfo ${culture.id}`} style={{color: culture.color}}>
+        <img src={culture.img} alt={culture.name}/>
+        <h1>{culture.name}</h1>        
       </div>
     )
   }

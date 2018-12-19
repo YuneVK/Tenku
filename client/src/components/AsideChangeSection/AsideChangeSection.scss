@@ -1,8 +1,13 @@
 .AsideChangeSection {
   cursor: pointer;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: all .6s cubic-bezier(.66,-0.38,.29,1.37);
 
   .aside-button {
-    position: absolute;
+    position: relative;
     bottom: 0;
     left: 0;
     right: 0;
@@ -48,6 +53,28 @@
       display: inline-block;
       border: 3.9rem solid transparent;
       border-bottom-color: #212121;
+    }
+  }
+
+  .main-content {
+    z-index: 999;
+    position: relative;
+    width: 11.5rem;
+    margin: 0 auto;
+
+    p {
+      margin: 0;
+      background: #212121;
+      padding: .7rem 1rem;
+      font-size: .8rem;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: .025rem;
+      text-transform: uppercase;  
+      height: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }

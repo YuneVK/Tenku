@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './AsideConstellation.scss'
+import './themes.scss'
 
 import AsideButtonConstellation from '../AsideButtonConstellation/AsideButtonConstellation'
 
@@ -25,10 +26,12 @@ export default class AsideConstellation extends Component {
   }
 
   render() {
-    const top = this.state.active ? 0 : this.state.offsetHeight
+    const top = this.state.active ? 0 : this.state.offsetHeight;
+
+    console.log('active cultures', this.props.culture)
 
     return (
-      <div className="AsideConstellation" style={{top: -top}}>
+      <div className={`AsideConstellation ${this.props.culture}`} style={{top: -top}}>
         <div className="content" ref={this.aside}>
           {/* <p className="culture-name">Western</p> */}
           {this.props.children}
