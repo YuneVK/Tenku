@@ -8,11 +8,7 @@ import { NavLink } from 'react-router-dom'
 
 import Select from '../Select/Select'
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-]
+
 
 export default class PlanetariumControls extends Component {
   constructor() {
@@ -37,8 +33,6 @@ export default class PlanetariumControls extends Component {
   toggleMenu = e => {
     let hasClass = Utils.toggleClass(document.querySelector('#PlanetariumControls'), 'visible');
     Utils.toggleClass(e.target, 'active');
-
-    //e.target.innerHTML = hasClass ? 'Close Controls' : 'Open Controls';
   }
 
   toggleConstellations = (e, callback) => {
@@ -50,10 +44,10 @@ export default class PlanetariumControls extends Component {
   }
 
   toggleStarsNames = (e, callback, option) => {
-    let starsConfig = {...this.state.stars};
+    let starsConfig = { ...this.state.stars };
     let hasClass = Utils.toggleClass(e.target, 'on');
 
-    starsConfig[option] = hasClass; 
+    starsConfig[option] = hasClass;
 
     if (!starsConfig.names) {
       starsConfig.desig = false;
@@ -71,21 +65,18 @@ export default class PlanetariumControls extends Component {
         e.target.innerHTML = hasClass ? 'Hide Proper Names' : 'Show Proper Names';
         break;
 
-      case 'names':
-        if (!hasClass) {
-          starsConfig.desig = false;
-          starsConfig.names = false;
-          document.querySelector('#all-designations').innerHTML = 'Show All Designations';
-        }
+      case 'designations':
+        starsConfig.desig = !starsConfig.desig;
+        starsConfig.names = !starsConfig.names;
         e.target.innerHTML = hasClass ? 'Hide Designations' : 'Show Designations';
         break;
 
-      case 'desig':
-        e.target.innerHTML = hasClass ? 'Hide All Designations' : 'Show All Designations';
-        break;
+      // case 'desig':
+      //   e.target.innerHTML = hasClass ? 'Hide All Designations' : 'Show All Designations';
+      //   break;
     }
 
-    this.setState({...this.state, stars: starsConfig}, () => {
+    this.setState({ ...this.state, stars: starsConfig }, () => {
       callback(hasClass, this.state.stars)
     })
   }
@@ -100,24 +91,22 @@ export default class PlanetariumControls extends Component {
 
   render() {
     let constellationsOptions = [];
-    let constellationSelect = [{value: '', label: 'Select a Constellation'}];
+    let constellationSelect = [{ value: '', label: 'Select a Constellation' }];
     if (this.props.constellationsOptions) {
       constellationsOptions = this.props.constellationsOptions.map(constellation => {
-        //return { value: constellation.center, label: constellation.name }
         constellationSelect.push({ value: constellation.center, label: constellation.name });
         return <option value={constellation.center}>{constellation.name}</option>
       })
-      console.log(constellationSelect)
-      //constellationsOptions.unshift({ value: '', label: 'Select Constellation' })
-      //constellationsOptions.unshift(<option value=''>Select a Constellation</option>)
-      //constellationsOptions.unshit({value: '', label: 'Select a Constellation'})
     }
 
     return (
       <div id="PlanetariumControls">
-        <button className="button toggleMenu" onClick={this.toggleMenu}><div></div></button>
-
-        <div className="menu">
+        <div className="stars-options">
+          <button className="button" onClick={e => this.toggleStarsNames(e, this.props.toggleStars, 'proper')}>Show Proper Names</button>
+          <button className="button" id="designations" onClick={e => this.toggleStarsNames(e, this.props.toggleStars, 'designations')}>Show Designations</button>
+          <NavLink strict to="/solar-system/" className="solar-system">Go to Solar System</NavLink>
+        </div>
+        <div className="menu" style={{ display: 'none' }}>
           <section>
             <p>Constellations</p>
             <select name="culture" id="culture" onChange={this.props.changeCulture}>
@@ -128,7 +117,7 @@ export default class PlanetariumControls extends Component {
               <option value="egyptian">Egyptian</option>
             </select>
 
-            <Select name="constellation" id="constellation" options={constellationSelect} onChange={this.props.navigateToConstellation}/>
+            <Select name="constellation" id="constellation" options={constellationSelect} onChange={this.props.navigateToConstellation} />
             <select name="constellation" id="constellation" onChange={this.props.navigateToConstellation}>
               {constellationsOptions}
             </select>
@@ -148,7 +137,6 @@ export default class PlanetariumControls extends Component {
 
           <section>
             <p>Date and Time</p>
-            {/* <div id="date"></div> */}
             <div id="celestial-form"></div>
 
           </section>

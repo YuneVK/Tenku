@@ -1,0 +1,58 @@
+.AsideConstellation {
+  position: absolute;
+  z-index: 9;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all .2s ease-in-out;
+  
+  > .content {
+    background: #212121;
+    width: fit-content;
+    margin: 0 auto;
+    min-width: 15rem;
+    padding: .5rem;
+    height: 3rem;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -4rem;
+      height: 0;
+      width: 0;
+      display: inline-block;
+      border: 4rem solid transparent;
+      border-top-color: #212121;
+      z-index: -1;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -4rem;
+      height: 0;
+      width: 0;
+      display: inline-block;
+      border: 4rem solid transparent;
+      border-top-color: #212121;
+      z-index: -1;
+    }
+
+    p.culture-name {
+      margin: 0;
+      text-align: left;
+      text-transform: uppercase;
+      padding-left: .5rem;
+      padding-top: .5rem;
+      color: #fff;
+      font-size: .9rem;
+      letter-spacing: .025rem;
+    }
+  }  
+}

@@ -17,15 +17,15 @@ export default class Aside extends Component {
   }
 
   componentDidMount () {
-    console.log(this.myInput.current.offsetWidth)
-    this.setState({...this.state, offsetWidth: this.myInput.current.offsetWidth})
+    this.setState({...this.state, offsetWidth: this.myInput.current.offsetWidth, active: this.props.visible})
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (prevState === this.state) this.setState({...this.state, active: this.props.visible});
   }
 
   toggleContent = e => {
-    console.log('clicked', e.target)
     this.setState({...this.state, active: !this.state.active}, () => {
-      console.log(this.state.active)
-
     })
   }
 

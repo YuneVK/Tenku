@@ -9,30 +9,35 @@ export default class CustomSelect extends Component {
     super();
 
     this.state = {
-      optionsVisible: false
+      optionsVisible: false, 
+      selected: 'Select a Constellation'
     }
 
   }
   
   componentDidMount() {
     console.log(this.props)
-    
   }
   
   changeVisibility = e => {
     this.setState({...this.state, optionsVisible: !this.state.optionsVisible})
   }
-  
+
+  changeConstellation = (constellation, label) => {
+    console.log('clicked', constellation)
+    this.props.navigateToConstellation(constellation);
+    this.setState({...this.state, optionsVisible: false, selected: label})
+  }
   
   render() {
     return (
-      <div className="Select" id={this.props.id}>
+      <div className="Select" id={this.props.id} >
         <div className={`header ${this.state.optionsVisible ? 'active' : ''}`} onClick={this.changeVisibility}>
-          <span>Select a Constellation</span><div></div>
+          <span>{this.state.selected}</span><div></div>
         </div>
         <div className={`options ${this.state.optionsVisible ? 'visible' : ''}`}>
           {this.props.options.map(option => {
-            return <div className="option" data-value={option.value}>{option.label}</div>
+            return <div className="option" data-value={option.value} onClick={e => this.changeConstellation(option.value, option.label)}>{option.label}</div>
           })}
         </div>
       </div>

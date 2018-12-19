@@ -39,7 +39,7 @@ export default {
     },
     location: true,
     planets: {  //Show planet locations, if date-time is set
-      show: true,
+      show: false,
       // List of all objects to show
       which: ["sol", "mer", "ven", "ter", "lun", "mar", "jup", "sat", "ura", "nep"],
       // Font styles for planetary symbols

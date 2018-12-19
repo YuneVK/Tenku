@@ -1,0 +1,53 @@
+.AsideChangeSection {
+  cursor: pointer;
+
+  .aside-button {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    height: 3.5rem;
+    width: 3.5rem;
+    background: #212121;
+    z-index: 9;
+    padding: .2rem;
+
+    .content {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      position: relative;
+      z-index: 9;
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 0;
+      width: 0;
+      display: inline-block;
+      border: 3.9rem solid transparent;
+      border-bottom-color: #212121;
+    }
+  
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -3.9rem;
+      height: 0;
+      width: 0;
+      display: inline-block;
+      border: 3.9rem solid transparent;
+      border-bottom-color: #212121;
+    }
+  }
+}

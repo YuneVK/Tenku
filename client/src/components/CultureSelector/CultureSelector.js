@@ -4,10 +4,38 @@ import Select from '../Select/Select'
 
 import './CultureSelector.scss'
 
+import cultures from './cultures.js'
+
+console.log(cultures)
+
 export default class CultureSelector extends Component {
-  
+  constructor() {
+    super();
+
+    this.state = {
+      active: 'western',
+      info: cultures.western
+    }
+
+    console.log(this.state)
+  }
+
+  changeCulture = culture => {
+    console.log(culture);
+    //console.log(cultures.indexOf(culture))
+    this.setState({...this.state, active: culture, info: cultures[culture]}, () => {
+      this.props.changeCulture(culture);
+      this.props.changeVisibility();
+    })
+  }
+
+  changeInfo = culture => {
+    console.log(culture)
+    this.setState({...this.state, info: cultures[culture]})
+  }
+
   render() {
-    let constellationSelect = [{value: '', label: 'Select Constellation'}];
+    let constellationSelect = [{ value: '', label: 'Select Constellation' }];
     if (this.props.constellationsOptions) {
       this.props.constellationsOptions.forEach(constellation => {
         constellationSelect.push({ value: constellation.center, label: constellation.name });
@@ -17,19 +45,39 @@ export default class CultureSelector extends Component {
     return (
       <div className="CultureSelector">
         <div className="buttons">
-          <h1>Select a Culture</h1>        
-          <button className="western">Western</button>
-          <button className="chinese">Chinese</button>
-          <button className="aztec">Aztec</button>
-          <button className="romanian">Romanian</button>
-          <button className="egyptian">Egyptian</button>
+          <h1>Select a Culture</h1>
+
+          {Object.keys(cultures).map(id => {
+            return (
+              <button
+                className={`${cultures[id].id} ${this.state.active == cultures[id].id && 'active'}`}
+                onClick={e => this.changeCulture(cultures[id].id)}
+                onMouseOver={e => this.changeInfo(cultures[id].id)}>
+                {cultures[id].name}
+              </button>)
+          })}
+
+          {/* {cultures.map(culture => {
+            return (
+              <button
+                className={`${culture.id} ${this.state.active == culture.id && 'active'}`}
+                onClick={e => this.changeCulture(culture.id)}>
+                {culture.name}
+              </button>)
+          })} */}
         </div>
 
         <div className="info">
-          <h2>Western (Modern)</h2>
-          <p>In contemporary astronomy, a constellation is one of 88 regions of the sky generally based on the asterisms (which are also called "constellations") of Greek and Roman mythology. The number 88, along with the contemporary scientific concept of "constellation" as regions of the sky, bordered by arcs of right ascensions and declinations, that together cover the entire celestial sphere, was established in 1922 by the International Astronomical Union.</p>
+          <h2>{this.state.info.title}</h2>
 
-          <Select name="constellation" id="constellation-select" options={constellationSelect} onChange={this.props.navigateToConstellation}/>
+          <div className="info-content">
+            <p className="constellations"><span>{this.state.info.constellations}</span> constellations</p>
+            {/* <p className="stars"><span>400</span> stars</p> */}
+
+            <p className="text">{this.state.info.description}</p>
+          </div>
+
+          {/* <Select name="constellation" id="constellation-select" options={constellationSelect} onChange={this.props.navigateToConstellation} /> */}
         </div>
       </div>
     )

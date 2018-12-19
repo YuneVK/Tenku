@@ -9,7 +9,9 @@
   .buttons {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     min-width: 13rem;
+    padding: 2rem 1rem;
 
     h1 {
       text-transform: uppercase;
@@ -38,6 +40,10 @@
       background-repeat: no-repeat;
       font-weight: 600;
       transition: all .2s ease-in-out;
+
+      &:focus {
+        outline: none;
+      }
 
       &.western {
         border-color: #62C953;
@@ -108,15 +114,31 @@
   .info {
     max-width: 20rem;
     padding: 2rem;
-    text-align: right;
+    text-align: left;
+    position: relative;
 
     h2 {
       margin-top: 0;
     }
 
+    p.constellations, p.stars {
+      text-transform: uppercase;
+      font-size: .85rem;
+
+      span {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-right: .4rem;
+      }
+    }
+
+    
+
     .Select {
       width: 80%;
-      float: right;
+      margin-left: 0;
+      position: absolute;
+      bottom: 2.5rem;
     }
 
     &.western {

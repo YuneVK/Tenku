@@ -12,6 +12,10 @@ import PlanetariumControls from '../PlanetariumControls/PlanetariumControls';
 
 import Aside from '../Aside/Aside'
 import CultureSelector from '../CultureSelector/CultureSelector'
+import Select from '../Select/Select'
+import AsideConstellation from '../AsideConstellation/AsideConstellation'
+import AsideChangeSection from '../AsideChangeSection/AsideChangeSection'
+import CultureInfo from '../CultureInfo/CultureInfo'
 
 export default class Planetarium extends Component {
   constructor() {
@@ -21,16 +25,17 @@ export default class Planetarium extends Component {
       loaded: false,
       showConstellations: true,
       config: config.celestial,
-      activeCulture: 'western', 
+      activeCulture: 'western',
+      asideCultures: false
     }
   }
 
   componentDidMount() {
     Constellations.paintConstellations('western', this.state, config)
-    .then(navigationOptions => {
-      this.setState({ ...this.state, constellationsOptions: navigationOptions })
-      window.Celestial.display(this.state.config);
-      window.Celestial.zoomBy(1.5);
+      .then(navigationOptions => {
+        this.setState({ ...this.state, constellationsOptions: navigationOptions })
+        window.Celestial.display(this.state.config);
+        window.Celestial.zoomBy(1.5);
       });
   }
 
@@ -45,13 +50,13 @@ export default class Planetarium extends Component {
     element.dispatchEvent(event);
   }
 
-  changeCulture = e => {
-    this.setState({ ...this.state, activeCulture: e.target.value })
+  changeCulture = culture => {
+    this.setState({ ...this.state, activeCulture: culture })
     window.Celestial.clear();
     window.Celestial.redraw();
-    Constellations.paintConstellations(e.target.value, this.state, config)
+    Constellations.paintConstellations(culture, this.state, config)
       .then(navigationOptions => {
-        this.setState({ ...this.state, constellationsOptions: navigationOptions })
+        this.setState({ ...this.state, constellationsOptions: navigationOptions, asideCultures: false })
       })
   }
 
@@ -78,10 +83,10 @@ export default class Planetarium extends Component {
     })
   }
 
-  navigateToConstellation = e => {
-    if (!e.target.value.length) return;
+  navigateToConstellation = coordinates => {
+    if (!coordinates.length) return;
 
-    const coordinates = e.target.value.split(',');
+    //const coordinates = e.target.value.split(',');
     coordinates[0] = +coordinates[0];
     coordinates[1] = +coordinates[1];
     coordinates[2] = 0;
@@ -106,7 +111,7 @@ export default class Planetarium extends Component {
   }
 
   setPlanetsAnimation = () => {
-      let reqID,
+    let reqID,
       reqAnimFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
         window.webkitRequestAnimationFrame || window.msRequestAnimationFrame ||
         window.oRequestAnimationFrame,
@@ -123,27 +128,55 @@ export default class Planetarium extends Component {
 
     window.d3.select('#celestial-map').on('mousedown', function () { cncAnimFrame(reqID) })
     window.d3.select('#celestial-map').on('mouseup', function () { reqAnimFrame(animate) })
-    window.d3.select('#planets-animation').on('click', function () { 
+    window.d3.select('#planets-animation').on('click', function () {
       cncAnimFrame(reqID);
-      window.d3.select('#celestial-map').on('mousedown', null )
+      window.d3.select('#celestial-map').on('mousedown', null)
       window.d3.select('#celestial-map').on('mouseup', null)
     })
 
-    window.d3.select('.solar-system').on('click', function () { 
+    window.d3.select('.solar-system').on('click', function () {
       cncAnimFrame(reqID);
-      window.d3.select('#celestial-map').on('mousedown', null )
+      window.d3.select('#celestial-map').on('mousedown', null)
       window.d3.select('#celestial-map').on('mouseup', null)
     })
 
     reqID = reqAnimFrame(animate);
   }
 
+  changeAsideCultures = () => {
+    //console.log(visibility)
+
+    this.setState({ ...this.state, asideCultures: !this.state.asideCultures })
+  }
+
   render() {
+    let constellationSelect = [{ value: '', label: 'Select Constellation' }];
+    if (this.state.constellationsOptions) {
+      this.state.constellationsOptions.forEach(constellation => {
+        constellationSelect.push({ value: constellation.center, label: constellation.name });
+      })
+    }
+
     return (
       <React.Fragment>
-        <Aside orientation="left" >
-          <CultureSelector constellationsOptions={this.state.constellationsOptions}/>
+        <CultureInfo />
+
+        <Aside orientation="left" visible={this.state.asideCultures}>
+          <CultureSelector
+            constellationsOptions={this.state.constellationsOptions}
+            changeCulture={this.changeCulture}
+            //visible={this.state.asideCultures}
+            changeVisibility={this.changeAsideCultures}
+          />
         </Aside>
+
+        <AsideConstellation>
+          <Select name="constellation" id="constellation-select" options={constellationSelect} navigateToConstellation={this.navigateToConstellation} />
+        </AsideConstellation>
+
+        <AsideChangeSection />
+
+        {/* <Select name="constellation" id="constellation-select" options={constellationSelect} onChange={this.navigateToConstellation}/> */}
 
         <div id="Planetarium" style={{ overflow: 'hidden' }}><div id="celestial-map"></div></div>
 
@@ -153,7 +186,7 @@ export default class Planetarium extends Component {
           changeCulture={this.changeCulture}
           navigateToConstellation={this.navigateToConstellation}
           constellationsOptions={this.state.constellationsOptions}
-          setPlanetsAnimation={this.setPlanetsAnimation} 
+          setPlanetsAnimation={this.setPlanetsAnimation}
         />
       </React.Fragment>
     )
