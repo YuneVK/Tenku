@@ -7,14 +7,21 @@ export default class SolarSystem extends Component {
   constructor() {
     super();
 
-    this.elements = ['Sun', 'Mercury', 'Venus', 'Earth', 'Moon', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];    
+    this.elements = ['Sun', 'Mercury', 'Venus', 'Earth', 'Moon', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
 
     console.log(window.THREE)
 
-
-
+    
+    
+    this.cursor = {
+      x: 0,
+      y: 0
+    }
+    
     
   }
+  
+
 
   componentDidMount = () => {
     var renderer = new window.THREE.WebGLRenderer({
@@ -26,8 +33,8 @@ export default class SolarSystem extends Component {
 
     let updateFcts = [];
     this.scene = new window.THREE.Scene();
-    var camera = new window.THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100);
-    camera.position.z = 1.5;
+    var camera = new window.THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 120);
+    camera.position.z = 2;
     var light = new window.THREE.AmbientLight(0x888888)
     this.scene.add(light)
     // var light	= new window.THREE.DirectionalLight( 'white', 1)
@@ -63,7 +70,7 @@ export default class SolarSystem extends Component {
     //////////////////////////////////////////////////////////////////////////////////
 
     this.currentMesh = null
-   
+
     var initialType = 'Earth'
     this.switchValue(initialType)
     //////////////////////////////////////////////////////////////////////////////////
@@ -75,8 +82,8 @@ export default class SolarSystem extends Component {
       mouse.y = (event.clientY / window.innerHeight) - 0.5
     }, false)
     updateFcts.push((delta, now) => {
-      camera.position.x += (mouse.x * 5 - camera.position.x) * (delta * 3)
-      camera.position.y += (mouse.y * 5 - camera.position.y) * (delta * 3)
+      camera.position.x += (mouse.x * 3 - camera.position.x) * (delta * 1.5)
+      camera.position.y += (mouse.y * 3 - camera.position.y) * (delta * 1.5)
       camera.lookAt(this.scene.position)
     })
     //////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +97,8 @@ export default class SolarSystem extends Component {
     //		loop runner							//
     //////////////////////////////////////////////////////////////////////////////////
     var lastTimeMsec = null
-    requestAnimationFrame(function animate(nowMsec) {
+
+    const animate = (nowMsec) => {
       //debugger;
       // keep looping
       requestAnimationFrame(animate);
@@ -102,13 +110,41 @@ export default class SolarSystem extends Component {
       updateFcts.forEach((updateFn) => {
         updateFn(deltaMsec / 1000, nowMsec / 1000)
       })
-    })
 
+      
+      // console.log('cursor', this.cursor);
+      // console.log('cursor x', this.cursor.x);
+      // console.log('window width', window.innerWidth)
+      // console.log('half window width', window.innerWidth / 2)
+      
+      const deg = (this.cursor.x > window.innerWidth / 2) ? 0.3 : -0.3;
+      this.currentMesh.rotateY(window.THREE.Math.degToRad(deg));
+    }
+
+    requestAnimationFrame(animate);
+
+
+    
+    let getCursorXY = (e) => {
+      let cursorX = (window.Event) ? e.pageX : e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+      let cursorY = (window.Event) ? e.pageY : e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+      
+      this.cursor.x = cursorX;
+      this.cursor.y = cursorY;
+    }
+    
+    if (window.Event) {
+      document.captureEvents(Event.MOUSEMOVE);
+    }
+
+
+    document.onmousemove = getCursorXY;
   }
+
 
   switchValue = type => {
     // TODO: cambiar if/else infernal por switch
-    
+
     this.currentMesh && this.scene.remove(this.currentMesh)
     if (type === 'Sun') {
       var mesh = window.THREEx.Planets.createSun()
