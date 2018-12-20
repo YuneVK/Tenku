@@ -51,14 +51,11 @@ export default class Planetarium extends Component {
   }
 
   changeCulture = culture => {
-    console.log('new culture', culture)
     this.setState({ ...this.state, activeCulture: culture }, () => {
-      console.log('active culture changed, new culture is ', this.state.activeCulture)
       window.Celestial.clear();
       window.Celestial.redraw();
       Constellations.paintConstellations(culture, this.state, config)
         .then(navigationOptions => {
-          console.log('options changed', culture)
           this.setState({ ...this.state, constellationsOptions: navigationOptions, asideCultures: false, activeCulture: culture })
         })
     })
@@ -90,7 +87,6 @@ export default class Planetarium extends Component {
   navigateToConstellation = coordinates => {
     if (!coordinates.length) return;
 
-    //const coordinates = e.target.value.split(',');
     coordinates[0] = +coordinates[0];
     coordinates[1] = +coordinates[1];
     coordinates[2] = 0;
@@ -148,8 +144,6 @@ export default class Planetarium extends Component {
   }
 
   changeAsideCultures = () => {
-    //console.log(visibility)
-
     this.setState({ ...this.state, asideCultures: !this.state.asideCultures })
   }
 
@@ -161,8 +155,6 @@ export default class Planetarium extends Component {
       })
     }
 
-    console.log('culture to sends', this.state.activeCulture)
-
     return (
       <React.Fragment>
         <CultureInfo culture={this.state.activeCulture} />
@@ -171,7 +163,6 @@ export default class Planetarium extends Component {
           <CultureSelector
             constellationsOptions={this.state.constellationsOptions}
             changeCulture={this.changeCulture}
-            //visible={this.state.asideCultures}
             changeVisibility={this.changeAsideCultures}
           />
         </Aside>
@@ -180,9 +171,7 @@ export default class Planetarium extends Component {
           <Select name="constellation" id="constellation-select" options={constellationSelect} navigateToConstellation={this.navigateToConstellation} />
         </AsideConstellation>
 
-        <AsideChangeSection />
-
-        {/* <Select name="constellation" id="constellation-select" options={constellationSelect} onChange={this.navigateToConstellation}/> */}
+        <AsideChangeSection to="solarSystem" />
 
         <div id="Planetarium" style={{ overflow: 'hidden' }}><div id="celestial-map"></div></div>
 

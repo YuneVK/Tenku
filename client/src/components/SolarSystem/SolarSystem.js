@@ -5,6 +5,9 @@ import './SolarSystem.scss'
 
 import AsidePlanets from '../AsidePlanets/AsidePlanets'
 import Aside from '../Aside/Aside'
+import AsideChangeSection from '../AsideChangeSection/AsideChangeSection'
+import PlanetInfo from '../PlanetInfo/PlanetInfo'
+
 
 export default class SolarSystem extends Component {
   constructor() {
@@ -18,7 +21,8 @@ export default class SolarSystem extends Component {
     }
 
     this.state = {
-      asideCultures: false
+      asideCultures: false, 
+      active: 'Earth'
     }
   }
 
@@ -180,6 +184,8 @@ export default class SolarSystem extends Component {
     } else console.assert(false)
     this.scene.add(mesh)
     this.currentMesh = mesh
+
+    this.setState({...this.state, active: type})
     //window.location.hash = type
   }
 
@@ -192,20 +198,13 @@ export default class SolarSystem extends Component {
   render() {
     return (
       <div id="SolarSystem">
+        <PlanetInfo info={this.state.active} />
+
         <Aside orientation="left" visible={this.state.asideCultures}>
           <AsidePlanets switchPlanet={this.switchValue} changeVisibility={this.changeAsideCultures} />
         </Aside>
 
-
-
-
-        {/* <h1>Solar System</h1> */}
-
-        {this.elements.map(element => {
-          return <button onClick={e => this.switchValue(element)}>{element}</button>
-        })}
-
-        <NavLink strict to="/">Go to Planetarium</NavLink>
+        <AsideChangeSection to="planetarium" />
       </div>
     )
   }

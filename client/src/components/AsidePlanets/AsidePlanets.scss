@@ -53,140 +53,140 @@
       }
 
       &.Sun {
-        border-color: #62C953;
-        color: #62C953;
-        background-image: url('/images/icons/sun.svg');
+        border-color: #F0C100;
+        color: #F0C100;
+        background-image: url('/images/planets/sun.svg');
 
         &:hover, &.active {
-          background-color: #62C953;
+          background-color: #F0C100;
           color: #fff;
-          background-image: url('/images/icons/sun-white.svg')
+          background-image: url('/images/planets/sun-white.svg')
         }
       }
 
       &.Mercury {
-        background-image: url('/images/icons/congratulations.svg');
-        border-color: #E6001C;
-        color: #E6001C;
+        background-image: url('/images/planets/mercury.svg');
+        border-color: #EB9600;
+        color: #EB9600;
 
         &:hover, &.active {
-          background-color: #E6001C;
+          background-color: #EB9600;
           color: #fff;
-          background-image: url('/images/icons/congratulations-white.svg')
+          background-image: url('/images/planets/mercury-white.svg')
         }
       }
 
       &.Venus {
-        background-image: url('/images/icons/aztec-gold.svg');
-        border-color: #EBAC00;
-        color: #EBAC00;
-
-        &:hover, &.active {
-          background-color: #EBAC00;
-          color: #fff;
-          background-image: url('/images/icons/aztec-gold-white.svg');
-        }
-      }
-
-      &.Moon {
-        background-image: url('/images/icons/helmet.svg');
-        color: #2864A3;
-        border-color: #2864A3;
-
-        &:hover, &.active {
-          background-color: #2864A3;
-          color: #fff;
-          background-image: url('/images/icons/helmet-white.svg');
-        }
-      }
-
-      &.Earth {
-        background-image: url('/images/icons/pharaoh.svg');
-        color: #ED7300;
+        background-image: url('/images/planets/venus.svg');
         border-color: #ED7300;
+        color: #ED7300;
 
         &:hover, &.active {
           background-color: #ED7300;
           color: #fff;
-          background-image: url('/images/icons/pharaoh-white.svg');
+          background-image: url('/images/planets/venus-white.svg');
+        }
+      }
+
+      &.Moon {
+        background-image: url('/images/planets/moon.svg');
+        color: #fff;
+        border-color: #fff;
+
+        &:hover, &.active {
+          background-color: #fff;
+          color: #212121;
+          background-image: url('/images/planets/moon-white.svg');
+        }
+      }
+
+      &.Earth {
+        background-image: url('/images/planets/earth.svg');
+        color: #62C953;
+        border-color: #62C953;
+
+        &:hover, &.active {
+          background-color: #62C953;
+          color: #fff;
+          background-image: url('/images/planets/earth-white.svg');
 
         }
       }
 
       &.Mars {
-        background-image: url('/images/icons/pharaoh.svg');
-        color: #ED7300;
-        border-color: #ED7300;
+        background-image: url('/images/planets/mars.svg');
+        color: #EE0000;
+        border-color: #EE0000;
 
         &:hover, &.active {
-          background-color: #ED7300;
+          background-color: #EE0000;
           color: #fff;
-          background-image: url('/images/icons/pharaoh-white.svg');
+          background-image: url('/images/planets/mars-white.svg');
 
         }
       }
 
       &.Jupiter {
-        background-image: url('/images/icons/pharaoh.svg');
-        color: #ED7300;
-        border-color: #ED7300;
+        background-image: url('/images/planets/jupiter.svg');
+        color: #BCAAA4;
+        border-color: #BCAAA4;
 
         &:hover, &.active {
-          background-color: #ED7300;
+          background-color: #BCAAA4;
           color: #fff;
-          background-image: url('/images/icons/pharaoh-white.svg');
+          background-image: url('/images/planets/jupiter-white.svg');
 
         }
       }
 
       &.Saturn {
-        background-image: url('/images/icons/pharaoh.svg');
-        color: #ED7300;
-        border-color: #ED7300;
+        background-image: url('/images/planets/saturn.svg');
+        color: #C5004B;
+        border-color: #C5004B;
 
         &:hover, &.active {
-          background-color: #ED7300;
+          background-color: #C5004B;
           color: #fff;
-          background-image: url('/images/icons/pharaoh-white.svg');
+          background-image: url('/images/planets/saturn-white.svg');
 
         }
       }
 
       &.Uranus {
-        background-image: url('/images/icons/pharaoh.svg');
-        color: #ED7300;
-        border-color: #ED7300;
+        background-image: url('/images/planets/uranus.svg');
+        color: #007E98;
+        border-color: #007E98;
 
         &:hover, &.active {
-          background-color: #ED7300;
+          background-color: #007E98;
           color: #fff;
-          background-image: url('/images/icons/pharaoh-white.svg');
+          background-image: url('/images/planets/uranus-white.svg');
 
         }
       }
 
       &.Neptune {
-        background-image: url('/images/icons/pharaoh.svg');
-        color: #ED7300;
-        border-color: #ED7300;
+        background-image: url('/images/planets/neptune.svg');
+        color: #AB0067;
+        border-color: #AB0067;
 
         &:hover, &.active {
-          background-color: #ED7300;
+          background-color: #AB0067;
           color: #fff;
-          background-image: url('/images/icons/pharaoh-white.svg');
+          background-image: url('/images/planets/neptune-white.svg');
 
         }
       }
 
       &.Pluto {
-        background-image: url('/images/icons/pharaoh.svg');
-        color: #ED7300;
-        border-color: #ED7300;
+        background-image: url('/images/planets/pluto.svg');
+        color: #607D8B;
+        border-color: #607D8B;
 
         &:hover, &.active {
-          background-color: #ED7300;
+          background-color: #607D8B;
           color: #fff;
-          background-image: url('/images/icons/pharaoh-white.svg');
+          background-image: url('/images/planets/pluto-white.svg');
 
         }
       }
@@ -210,10 +210,10 @@
       height: 100%;  
       opacity: .2; 
       z-index: -1;
-      
-      background-size: contain;
+      background-image: url('/images/illustrations/luna.png');
+      background-size: cover;
       background-repeat: no-repeat;
-      background-position: bottom;  
+      background-position: 0 center;  
     }
 
     h2 {
@@ -243,69 +243,81 @@
       bottom: 2.5rem;
     }
 
-    &.western {
+
+    &.Sun {
+      background-color: #F0C100;
+      // h2, p.constellations span {
+      //   color: #62C953;
+      // }
+    }
+
+    &.Mercury {
+      background-color: #EB9600;
+      // h2, p.constellations span {
+      //   color: #62C953;
+      // }
+    }
+
+    &.Venus {
+      background-color: #ED7300;
+      // h2, p.constellations span {
+      //   color: #62C953;
+      // }
+    }
+
+    &.Moon {
+      background-color: #fff;
+      color: #212121;
+    }
+
+    &.Earth {
       background-color: #62C953;
       // h2, p.constellations span {
       //   color: #62C953;
       // }
-
-      &:after {
-        background-image: url('/images/illustrations/greek.png');
-      }
     }
 
-    &.chinese {
-      background-color: #E6001C;
-
-      &:after {
-        background-image: url('/images/illustrations/dragon.png');
-        background-position: 4rem 2rem;
-        background-size: 100%;
-      }
+    &.Mars {
+      background-color: #EE0000;
       // h2, p.constellations span {
-      //   color: #E6001C;
+      //   color: #62C953;
       // }
     }
 
-    &.aztec {
-      background-color: #EBAC00;
-      color: #212121;
-      
-      &:after {
-        background-image: url('/images/illustrations/aztec.png');
-        background-position: center left;
-        background-size: 200%;
-        opacity: .1;
-      }
-
+    &.Jupiter {
+      background-color: #BCAAA4;
       // h2, p.constellations span {
-      //   color: #EBAC00;
+      //   color: #62C953;
       // }
     }
 
-    &.romanian {
-      background-color: #2864A3;
-
-      &:after {
-        background-image: url('/images/illustrations/roman.png');
-        background-size: 150%;
-        background-position-x: left;
-      }
+    &.Saturn {
+      background-color: #C5004B;
       // h2, p.constellations span {
-      //   color: #2864A3;
+      //   color: #62C953;
       // }
     }
 
-    &.egyptian {
-      background-color: #ED7300;
-      
-      &:after {
-        background-image: url('/images/illustrations/egypt.png');
-        background-position-x: 5rem;
-      }
+    &.Uranus {
+      background-color: #007E98;
       // h2, p.constellations span {
-      //   color: #ED7300;
+      //   color: #62C953;
       // }
     }
+
+    &.Neptune {
+      background-color: #AB0067;
+      // h2, p.constellations span {
+      //   color: #62C953;
+      // }
+    }
+
+    &.Pluto {
+      background-color: #607D8B;
+      // h2, p.constellations span {
+      //   color: #62C953;
+      // }
+    }
+
   }
 }

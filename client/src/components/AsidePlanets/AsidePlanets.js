@@ -4,6 +4,9 @@ import './AsidePlanets.scss'
 
 import planets from './planets.js'
 
+import PlanetInfo from '../PlanetInfo/PlanetInfo'
+
+
 export default class AsidePlanets extends Component {
   constructor() {
     super();
@@ -17,18 +20,23 @@ export default class AsidePlanets extends Component {
 
   }
 
+  changeInfo = planet => {
+    this.setState({...this.state, info: planets[planet]})
+  }
+
   render() {
     return (
+      <React.Fragment>
       <div className="AsidePlanets">
         <div className="buttons">
-          <h1>Select a Planet</h1>
+          <h1>Select an option</h1>
           <div className="buttonsContainer">
           {Object.keys(planets).map(id => {
             return (
               <button
                 className={`${planets[id].id} ${this.state.active == planets[id].id && 'active'}`}
                 onClick={e => this.props.switchPlanet(id)}
-                //onMouseOver={e => this.changeInfo(planets[id].id)}
+                onMouseOver={e => this.changeInfo(planets[id].id)}
                 >
                 {planets[id].name}
               </button>)
@@ -36,16 +44,16 @@ export default class AsidePlanets extends Component {
           </div>
         </div>
 
-        {/* <div className={`info ${this.state.info.id}`}>
+        <div className={`info ${this.state.info.id}`}>
           <h2>{this.state.info.title}</h2>
 
           <div className="info-content">
-            <p className="constellations"><span>{this.state.info.constellations}</span> constellations</p>
             <p className="text">{this.state.info.description}</p>
           </div>
 
-        </div> */}
+        </div>
       </div>
+      </React.Fragment>
     )
   }
 }
