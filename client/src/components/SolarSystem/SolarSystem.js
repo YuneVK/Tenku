@@ -3,25 +3,24 @@ import { NavLink } from 'react-router-dom'
 
 import './SolarSystem.scss'
 
+import AsidePlanets from '../AsidePlanets/AsidePlanets'
+import Aside from '../Aside/Aside'
+
 export default class SolarSystem extends Component {
   constructor() {
     super();
 
     this.elements = ['Sun', 'Mercury', 'Venus', 'Earth', 'Moon', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
 
-    console.log(window.THREE)
-
-    
-    
     this.cursor = {
       x: 0,
       y: 0
     }
-    
-    
-  }
-  
 
+    this.state = {
+      asideCultures: false
+    }
+  }
 
   componentDidMount = () => {
     var renderer = new window.THREE.WebGLRenderer({
@@ -111,36 +110,25 @@ export default class SolarSystem extends Component {
         updateFn(deltaMsec / 1000, nowMsec / 1000)
       })
 
-      
-      // console.log('cursor', this.cursor);
-      // console.log('cursor x', this.cursor.x);
-      // console.log('window width', window.innerWidth)
-      // console.log('half window width', window.innerWidth / 2)
-      
       const deg = (this.cursor.x > window.innerWidth / 2) ? 0.3 : -0.3;
       this.currentMesh.rotateY(window.THREE.Math.degToRad(deg));
     }
 
     requestAnimationFrame(animate);
 
-
-    
     let getCursorXY = (e) => {
       let cursorX = (window.Event) ? e.pageX : e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
       let cursorY = (window.Event) ? e.pageY : e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
-      
+
       this.cursor.x = cursorX;
       this.cursor.y = cursorY;
     }
-    
+
     if (window.Event) {
       document.captureEvents(Event.MOUSEMOVE);
     }
-
-
     document.onmousemove = getCursorXY;
   }
-
 
   switchValue = type => {
     // TODO: cambiar if/else infernal por switch
@@ -204,7 +192,14 @@ export default class SolarSystem extends Component {
   render() {
     return (
       <div id="SolarSystem">
-        <h1>Solar System</h1>
+        <Aside orientation="left" visible={this.state.asideCultures}>
+          <AsidePlanets switchPlanet={this.switchValue} changeVisibility={this.changeAsideCultures} />
+        </Aside>
+
+
+
+
+        {/* <h1>Solar System</h1> */}
 
         {this.elements.map(element => {
           return <button onClick={e => this.switchValue(element)}>{element}</button>

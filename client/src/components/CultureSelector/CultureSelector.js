@@ -6,8 +6,6 @@ import './CultureSelector.scss'
 
 import cultures from './cultures.js'
 
-console.log(cultures)
-
 export default class CultureSelector extends Component {
   constructor() {
     super();
