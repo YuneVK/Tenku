@@ -96,4 +96,6 @@ app.use((req, res, next) => {
   res.sendFile(__dirname + "/public/index.html");
 });
 
+app.use(express.static(path.join(__dirname, 'public')))
+
 module.exports = app;
