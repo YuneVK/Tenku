@@ -25,25 +25,16 @@ export default class PlanetInfo extends Component {
         <p className="title">{planet.name}</p>
 
         <div class="facts">
-          <div class="fact">
-            <p class="date">Radius</p>
-            <p class="number">44km</p>
-          </div>
-
-          <div class="fact">
-            <p class="date">Surface temperature</p>
-            <p class="number">44km</p>
-          </div>
-
-          <div class="fact">
-            <p class="date">Age</p>
-            <p class="number">44km</p>
-          </div>
-
-          <div class="fact">
-            <p class="date">Distance to Earth</p>
-            <p class="number">44km</p>
-          </div>
+          {
+            planet.facts.map(fact => {
+              return (
+                <div class="fact">
+                  <p class="date">{fact.name}</p>
+                  <p class="number">{fact.value}</p>
+                </div>
+              )
+            })
+          }
         </div>
       </div>
     )
