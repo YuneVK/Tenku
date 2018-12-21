@@ -78,7 +78,7 @@ require('./passport')(app);
     
 app.use(cors({
   credentials: true,
-  origin: ['http://localhost:3000']
+  origin: ['http://localhost:3000', 'http://tenku.herokuapp.com/']
 }));
 
 const index = require('./routes/index');
