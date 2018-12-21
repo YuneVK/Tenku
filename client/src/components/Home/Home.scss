@@ -1,0 +1,25 @@
+.Home {
+
+  .content {
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,.75);
+
+    h1 {
+      font-size: 5rem;
+      letter-spacing: .04rem;
+      color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,.3);
+      margin: 0;
+    }
+  }
+}

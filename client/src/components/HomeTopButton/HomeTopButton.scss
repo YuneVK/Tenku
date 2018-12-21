@@ -1,9 +1,9 @@
-.AsideChangeSection {
+.HomeTopButton {
   cursor: pointer;
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  top: 0;
   transition: all .6s cubic-bezier(.66,-0.38,.29,1.37);
 
   .aside-button {
@@ -35,25 +35,25 @@
     &:after {
       content: '';
       position: absolute;
-      bottom: 0;
+      top: 0;
       left: 0;
       height: 0;
       width: 0;
       display: inline-block;
       border: 3.9rem solid transparent;
-      border-bottom-color: #212121;
+      border-top-color: #212121;
     }
   
     &:before {
       content: '';
       position: absolute;
-      bottom: 0;
+      top: 0;
       left: -3.9rem;
       height: 0;
       width: 0;
       display: inline-block;
       border: 3.9rem solid transparent;
-      border-bottom-color: #212121;
+      border-top-color: #212121;
     }
   }
 

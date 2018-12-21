@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import './AsideChangeSection.scss'
+import './HomeTopButton.scss'
 
 import solarSystemImg from './img/space.svg'
 import constellationImg from './img/constellation.svg'
@@ -8,12 +8,12 @@ import constellationImg from './img/constellation.svg'
 import {Link} from 'react-router-dom'
 
 
-export default class AsideChangeSection extends Component {
+export default class HomeTopButton extends Component {
   constructor() {
     super();
 
     this.state = {
-      active: true,
+      active: false,
       offsetHeight: 0,
       link: '', 
       img: '',
@@ -28,7 +28,7 @@ export default class AsideChangeSection extends Component {
     const img = this.props.to === 'solarSystem' ? solarSystemImg : constellationImg;
     const text = this.props.to === 'solarSystem' ? 'Go to Solar System' : 'Go to Planetarium';
 
-    this.setState({ ...this.state, offsetHeight: this.aside.current.offsetHeight, active: true, link, img, text })
+    this.setState({ ...this.state, offsetHeight: this.aside.current.offsetHeight, active: false, link, img, text })
   }
 
   toggleContent = e => {
@@ -37,27 +37,27 @@ export default class AsideChangeSection extends Component {
   }
 
   show = e => {
-    this.setState({ ...this.state, active: false })
-  }
-
-  hide = e => {
     this.setState({ ...this.state, active: true })
   }
 
+  hide = e => {
+    this.setState({ ...this.state, active: false })
+  }
+
   render() {
-    const top = this.state.active ? this.state.offsetHeight : 0;
+    const top = this.state.active ? 0 : this.state.offsetHeight;
     return (
       <Link to={this.state.link}>
-        <div className={`AsideChangeSection ${this.props.culture}`} style={{ bottom: -top }} onMouseOver={this.show} onMouseLeave={this.hide} onClick={() => {
+        <div className={`HomeTopButton ${this.props.culture}`} style={{ top: -top }} onMouseOver={this.show} onMouseLeave={this.hide} onClick={() => {
         }}>
+          <div className="main-content" >
+            <p ref={this.aside}>{this.state.text}</p>
+          </div>
+
           <div className="aside-button" >
             <div className="content">
               <img src={this.state.img} alt="Solar System Icon" />
             </div>
-          </div>
-
-          <div className="main-content" >
-            <p ref={this.aside}>{this.state.text}</p>
           </div>
         </div>
       </Link>
