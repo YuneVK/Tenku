@@ -10,4 +10,12 @@
     background: #212121;
     color: #fff
   }
+
+  .arrow {
+    transition: all .2s ease-in-out;
+  }
+
+  &.true .arrow {
+    transform: rotate(-40deg) !important;
+  }
 }

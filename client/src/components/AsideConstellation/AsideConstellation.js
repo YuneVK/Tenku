@@ -31,7 +31,7 @@ export default class AsideConstellation extends Component {
     console.log('active cultures', this.props.culture)
 
     return (
-      <div className={`AsideConstellation ${this.props.culture}`} style={{top: -top}}>
+      <div className={`AsideConstellation ${this.props.culture} ${this.state.active}`} style={{top: -top}}>
         <div className="content" ref={this.aside}>
           {/* <p className="culture-name">Western</p> */}
           {this.props.children}

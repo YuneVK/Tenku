@@ -32,7 +32,7 @@ export default class Aside extends Component {
   render() {
     const left = this.state.active ? 0 : this.state.offsetWidth
     return (
-      <div className="Aside" style={{left: -left}}>
+      <div className={`Aside ${this.state.active}`} style={{left: -left}}>
         <div className="content" ref={this.myInput}>
           {this.props.children}
         </div>

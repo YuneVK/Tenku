@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Raleway');
 
 body {
   margin: 0;
@@ -21,6 +21,10 @@ body {
   background: #160048;
 
   font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, .PlanetInfo .facts p.date, .PlanetInfo .title {
+  font-family: 'Raleway', sans-serif;
 }
 
 code {
